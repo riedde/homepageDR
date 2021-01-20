@@ -2,9 +2,10 @@ xquery version "3.1";
 
 module namespace app="http://dennisried.de/templates";
 
-import module namespace templates="http://exist-db.org/xquery/templates" ;
-import module namespace config="http://dennisried.de/config" at "config.xqm";
-import module namespace i18n = "http://exist-db.org/xquery/i18n" at "i18n.xql";
+import module namespace templates="http://exist-db.org/xquery/templates";
+import module namespace config="http://exist-db.org/xquery/config" at "/db/apps/homepageDR/modules/config.xqm";
+import module namespace i18n = "http://exist-db.org/xquery/i18n" at "/db/apps/homepageDR/modules/i18n.xql";
+import module namespace shared="http://dennisried.de/shared" at "/db/apps/homepageDR/modules/shared.xql";
 
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 declare namespace mei = "http://www.music-encoding.org/ns/mei";
@@ -49,3 +50,12 @@ declare function app:skills($node as node(), $model as map(*)) {
     return
         transform:transform($skills, $formatText, ())
     };
+    
+declare function app:langSwitch($node as node(), $model as map(*)) {
+    let $supportedLangVals := ('de', 'en')
+    for $lang in $supportedLangVals
+        return
+            <li class="nav-item">
+                <a id="{concat('lang-switch-', $lang)}" class="nav-link" style="{if (shared:get-lang() = $lang) then ('color: white!important;') else ()}" href="?lang={$lang}" onclick="{response:set-cookie('forceLang', $lang)}">{upper-case($lang)}</a>
+            </li>
+};

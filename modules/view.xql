@@ -11,9 +11,10 @@ import module namespace templates="http://exist-db.org/xquery/templates" ;
  : The following modules provide functions which will be called by the 
  : templating.
  :)
-import module namespace config="http://dennisried.de/config" at "config.xqm";
-import module namespace app="http://dennisried.de/templates" at "app.xql";
-import module namespace i18n = "http://exist-db.org/xquery/i18n" at "i18n.xql";
+import module namespace config="http://exist-db.org/xquery/config" at "/db/apps/homepageDR/modules/config.xqm";
+import module namespace app="http://dennisried.de/templates" at "/db/apps/homepageDR/modules/app.xql";
+import module namespace i18n = "http://exist-db.org/xquery/i18n" at "/db/apps/homepageDR/modules/i18n.xql";
+import module namespace shared="http://dennisried.de/shared" at "/db/apps/homepageDR/modules/shared.xql";
 
 declare namespace output = "http://www.w3.org/2010/xslt-xquery-serialization";
 
