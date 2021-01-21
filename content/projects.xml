@@ -9,24 +9,52 @@
             <p>Publication Information</p>
          </publicationStmt>
          <sourceDesc>
-            <p>Information about the source</p>
+            <listEvent>
+               <event>
+                  <desc>
+                     <label>Retroconversion of »Mitteilungen« (IMRG)</label>
+                     <date from-custom="2020" to-custom="2021"></date>
+                  </desc>
+               </event>
+               <event>
+                  <desc><label>Kultur Klingt!</label>
+                  <date when-custom="2019"/></desc>
+               </event>
+               <event>
+                  <desc>
+                     <label>Digitales Joachim-Raff-Archiv</label>
+                     <date from-custom="2018"></date>
+                  </desc>
+               </event>
+               <event>
+                  <desc>
+                     <label>Baumann-Digital (BauDi)</label>
+                     <date from-custom="2017"></date>
+                  </desc>
+               </event>
+               <event>
+                  <desc>
+                     <label>Reger-Werkausgabe</label>
+                     <date from-custom="2016"></date>
+                  </desc>
+               </event>
+            </listEvent>
+            <listOrg>
+               <org><desc>MEI metadata interest group</desc></org>
+               <org>
+                  <desc>e-editiones</desc>
+               </org>
+               <org>
+                  <desc>Gesellschaft für Musikforschung</desc>
+               </org>
+               <org><desc>Gesellschaft für Musikgeschichte in Baden-Württemberg</desc></org>
+            </listOrg>
          </sourceDesc>
       </fileDesc>
   </teiHeader>
   <text>
       <body>
-         <p>This is about projects and organizations I'm involved.</p>
-         <p>
-            <list>
-               <item>Retroconversion of »Mitteilungen« (IMRG) 2020/21</item>
-               <item>Digitales Joachim-Raff-Archiv (JRA) since 2018</item>
-               <item>Reger-Werkausgabe (RWA) since 2016 (editor since 2019)</item>
-               <item>Baumann-Digital (BauDi) since 2017</item>
-               <item>Kultur Klingt! (2019)</item>
-               <item>MEI metadata interestgroup</item>
-               <item>e-editiones</item>
-            </list>
-         </p>
+         <p>Projects and organizations I'm involved.</p>
       </body>
   </text>
 </TEI>

@@ -12,11 +12,11 @@
             <listEvent>
                <event type="past">
                   <desc>
-                     <title>Tagung der Arbeitsgemeinschaft für germanistische Edition</title>
+                     <label>Tagung der Arbeitsgemeinschaft für germanistische Edition</label>
                      <orgName>Deutsches Literaturarchiv</orgName>
                      <settlement>Marbach am Neckar</settlement>
                      <date from="2020-02-12" to="2020-02-15">12.–15. Februar 2020</date>
-                     <desc type="contribution">Presentation: ›Epitexte‹ in der Reger-Werkausgabe</desc>
+                     <desc type="contribution" subtype="presentation">›Epitexte‹ in der Reger-Werkausgabe</desc>
                   </desc>
                </event>
             </listEvent>
