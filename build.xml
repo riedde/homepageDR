@@ -1,7 +1,7 @@
-<project default="xar" name="${package(abbrev)}">
+<project default="deployLocal" name="${package(abbrev)}">
     <xmlproperty file="./expath-pkg.xml"/>
     <tstamp>
-        <format property="DATETIME" pattern="yyyyMMdd-HHmm"  locale="en,UK" />
+        <format property="DATETIME" pattern="yyyyMMdd-HHmm" locale="en,UK" />
     </tstamp>
     <property name="env.EXIST_PATH" value="/opt/exist/exist-distribution-5.2.0"/>
     <property name="project.version" value="${package(version)}"/>
