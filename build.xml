@@ -1,4 +1,4 @@
-<project default="deployLocal" name="${package(abbrev)}">
+<project default="xar" name="${package(abbrev)}">
     <xmlproperty file="./expath-pkg.xml"/>
     <tstamp>
         <format property="DATETIME" pattern="yyyyMMdd-HHmm"  locale="en,UK" />
@@ -45,14 +45,14 @@
         <echo message="${deploy.output}"/>
         <xdb:remove xmlns:xdb="http://exist-db.org/ant" uri="${p.target1.exist.url}${p.target.exist.tmp}" resource="${xar.name}" user="${p.target.user}" password="${p.target.pass}"/>
         
-        <delete dir="build/"/>
+<!--        <delete dir="build/"/>-->
         
     </target>
     
     
     <target name="xarLocal">
         <mkdir dir="${build.dir}"/>
-        <git command="stash">
+        <!--<git command="stash">
             <args>
                 <arg value="save"/>
                 <arg value="temp"/>
@@ -65,11 +65,11 @@
         </git>
         <exec executable="python">
             <arg value="${pathResolverLocalhost}"/>
-        </exec>
+        </exec>-->
         <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}-${DSTAMP}-${TSTAMP}.xar" excludes="build/ .existdb.json build.sh"/>
-        <git command="reset">
+        <!--<git command="reset">
             <args>
-                <arg value="--hard" />
+                <arg value="-\-hard" />
             </args>
         </git>
         <git command="stash">
@@ -81,12 +81,12 @@
             <args>
                 <arg value="clear"/>
             </args>
-        </git>
+        </git>-->
     </target>
     
     <target name="xar" >
         <mkdir dir="${build.dir}"/>
-        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}-${DSTAMP}-${TSTAMP}.xar" excludes="build/ .existdb.json build.sh"/>
+        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}-${DSTAMP}-${TSTAMP}.xar" excludes="build/ .existdb.json"/>
     </target>
     
     <!--  git makro  -->
