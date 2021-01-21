@@ -6,6 +6,7 @@
 xquery version "3.1";
 
 import module namespace templates="http://exist-db.org/xquery/templates" ;
+import module namespace i18n = "http://exist-db.org/xquery/i18n-templates" at "/db/apps/homepageDR/modules/i18n-templates.xql";
 
 (: 
  : The following modules provide functions which will be called by the 
@@ -13,7 +14,6 @@ import module namespace templates="http://exist-db.org/xquery/templates" ;
  :)
 import module namespace config="http://exist-db.org/xquery/config" at "/db/apps/homepageDR/modules/config.xqm";
 import module namespace app="http://dennisried.de/templates" at "/db/apps/homepageDR/modules/app.xql";
-import module namespace i18n = "http://exist-db.org/xquery/i18n" at "/db/apps/homepageDR/modules/i18n.xql";
 import module namespace shared="http://dennisried.de/shared" at "/db/apps/homepageDR/modules/shared.xql";
 
 declare namespace output = "http://www.w3.org/2010/xslt-xquery-serialization";

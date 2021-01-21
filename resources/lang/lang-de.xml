@@ -1,8 +1,24 @@
 <catalogue xml:lang="de">
 
-    <!-- Main Nav -->
-    <msg key="welcome">Hello World</msg>
+    <!-- Nav -->
+    <msg key="about">Über mich</msg>
+    <msg key="experience">Berufserfahrung</msg>
+    <msg key="education">Ausbildung</msg>
+    <msg key="skills">Fähigkeiten</msg>
+    <msg key="projects">Projekte</msg>
+    <msg key="conferences">Tagungen</msg>
+    <msg key="papers">Veröffentlichungen</msg>
     
+    <!-- About -->
+    <msg key="country-de">Deutschland</msg>
+    <msg key="nationality-de">Deutsch</msg>
     
+    <!-- Education -->
+    <msg key="since">Seit</msg>
+    
+    <!-- Cookies -->
+    <msg key="cookies.notice">Diese Seite verwendet Cookies um eine gute Performacne zu garantieren (z.B. Spracheinstellung)</msg>
+    <msg key="cookies.learnMore">mehr erfahren</msg>
+    <msg key="cookies.accept">verstanden</msg>
     
 </catalogue>

@@ -1,8 +1,9 @@
 xquery version "3.0";
 
+import module namespace i18n="http://exist-db.org/xquery/i18n" at "/db/apps/homepageDR/modules/i18n.xql";
+
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace xdb = "http://exist-db.org/xquery/xmldb";
-import module namespace i18n="http://exist-db.org/xquery/i18n" at "modules/i18n.xql";
 
 declare variable $exist:path external;
 declare variable $exist:resource external;

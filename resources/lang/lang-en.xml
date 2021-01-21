@@ -1,6 +1,24 @@
 <catalogue xml:lang="en">
 
     <!-- Main Nav -->
-    <msg key="baudi.mainNav.catalog">Catalogs</msg>
+    <msg key="about">About me</msg>
+    <msg key="experience">Experience</msg>
+    <msg key="education">Education</msg>
+    <msg key="skills">Skills</msg>
+    <msg key="projects">Projects</msg>
+    <msg key="conferences">Conferences</msg>
+    <msg key="papers">Papers</msg>
+    
+    <!-- About -->
+    <msg key="country-de">Germany</msg>
+    <msg key="nationality-de">German</msg>
+    
+    <!-- Education -->
+    <msg key="since">Since</msg>
+    
+    <!-- Cookies -->
+    <msg key="cookies.notice">This page uses cookies for performance reasons (e.g. language settings)</msg>
+    <msg key="cookies.learnMore">learn more</msg>
+    <msg key="cookies.accept">got it!</msg>
     
 </catalogue>
