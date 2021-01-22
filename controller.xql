@@ -1,6 +1,7 @@
 xquery version "3.0";
 
 import module namespace i18n="http://exist-db.org/xquery/i18n" at "/db/apps/homepageDR/modules/i18n.xql";
+import module namespace shared="http://dennisried.de/shared" at "/db/apps/homepageDR/modules/shared.xql";
 
 import module namespace request="http://exist-db.org/xquery/request";
 import module namespace xdb = "http://exist-db.org/xquery/xmldb";
@@ -19,7 +20,7 @@ if ($exist:path eq '') then
 else if ($exist:path eq "/") then
     (: forward root path to index.xql :)
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
-        <redirect url="index.html"/>
+        <redirect url="index.html?lang={shared:get-browser-lang()}"/>
     </dispatch>
     
 else if (ends-with($exist:resource, ".html")) then

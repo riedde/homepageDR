@@ -161,6 +161,10 @@ declare function app:langSwitch($node as node(), $model as map(*)) {
     for $lang in $supportedLangVals
         return
             <li class="nav-item">
-                <a id="{concat('lang-switch-', $lang)}" class="nav-link" style="{if (shared:get-lang() = $lang) then ('color: white!important;') else ()}" href="?lang={$lang}" onclick="{response:set-cookie('forceLang', $lang)}">{upper-case($lang)}</a>
+                <a id="{concat('lang-switch-', $lang)}"
+                   class="nav-link {if(shared:get-lang() = $lang) then('active')else('')}"
+                   style="{if (shared:get-lang() = $lang) then ('color: white!important; font-weight: bold;') else ()}"
+                   href="?lang={$lang}"
+                   onclick="{response:set-cookie('forceLang', $lang, 'P1D', true())}">{upper-case($lang)}</a>
             </li>
 };
