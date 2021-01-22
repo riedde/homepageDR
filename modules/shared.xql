@@ -91,3 +91,11 @@ declare function shared:getSelectedLanguage($node as node()*,$selectedLang as xs
     shared:get-lang()
 };
 
+declare function shared:getDate($date as node()?, $param as xs:string) as xs:string{
+let $dateFrom := $date/@from-custom/string()
+let $dateTo := $date/@to-custom/string()
+let $dateWhen := $date/@when-custom/string()
+
+return
+    if($dateTo)then(concat($dateFrom, '–', $dateTo))else(concat(shared:translate('since'), ' ', $dateFrom))
+};

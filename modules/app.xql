@@ -60,7 +60,7 @@ let $eduList := $doc//tei:education
 for $edu in $eduList
 
 let $inst := $edu//tei:orgName[@xml:lang = $lang]
-let $instPlace := $edu//tei:settlement
+let $instPlace := $edu//tei:settlement/text()
 let $subject := $edu//tei:note[@type = 'subject'][@xml:lang = $lang]
 let $gradeNote := $edu//tei:note[@type = 'grade'][@subtype= 'german']/text()
 let $gradeGPA := $edu//tei:note[@type = 'grade'][@subtype= 'GPA']/text()
@@ -71,9 +71,8 @@ let $grade := if($lang = 'en' and $gradeGPA)
               else if($lang = 'de' and $gradeNote)
               then('Note: ', $gradeNote)
               else()
-let $dateFrom := substring($edu//tei:date/@from-custom/string(),1,4)
-let $dateTo := substring($edu//tei:date/@to-custom/string(),1,4)
-let $date := if($dateTo)then(concat($dateFrom, '–', $dateTo))else(concat(shared:translate('since'), ' ', $dateFrom))
+let $date := shared:getDate($edu//tei:date, 'full')
+
 return
     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
             <div class="flex-grow-1">
@@ -99,9 +98,7 @@ for $occ in $occList
 let $label := $occ//tei:label[@xml:lang = $lang]
 let $org := $occ//tei:orgName[@xml:lang = $lang]
 let $desc := $occ//tei:desc[@xml:lang = $lang]
-let $dateFrom := substring($occ//tei:date/@from-custom/string(),1,4)
-let $dateTo := substring($occ//tei:date/@to-custom/string(),1,4)
-let $date := if($dateTo)then(concat($dateFrom, '–', $dateTo))else(concat(shared:translate('since'), ' ', $dateFrom))
+let $date := shared:getDate($org//tei:date, 'full')
 return
     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
         <div class="flex-grow-1">
@@ -142,9 +139,14 @@ declare function app:conferences($node as node(), $model as map(*)) {
         return
             (<h3>{$confType}</h3>,
              <ul>{for $confItem in $confItems[@type=$confType]
-                                let $confType := $confItem/@type/string()
-                                return
-                                   <li type="{$confType}">{$confItem}</li>}</ul>)
+                    let $confType := $confItem/@type/string()
+                    let $label := $confItem//tei:label/text()
+                    let $orgName := $confItem//tei:orgName/text()
+                    let $settlement := $confItem//tei:settlement/text()
+                    let $date := shared:getDate($confItem//tei:date, 'full')
+                    let $contr := $confItem//tei:desc/@type/string() (: controbution "yes", subtype="presentation" :)
+                    return
+                       <li type="{$confType}">{$confItem}</li>}</ul>)
 };
 
 declare function app:skills($node as node(), $model as map(*)) {
