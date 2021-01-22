@@ -13,10 +13,10 @@
             <listBibl>
                <biblStruct type="article">
                   <analytic>
+                     <author>Fütterer, Daniel</author>
+                     <author>Gawlok, Judith</author>
+                     <author>Lamprecht, Annelie </author>
                      <author>Ried, Dennis</author>
-                     <author>Daniel Fütterer</author>
-                     <author>Judith Gawlok</author>
-                     <author>Annelie Lamprecht</author>
                      <title>Scherzo g-Moll WoO II/1 und Harmonies funèbres WoO II/4. Erfahrungsbericht über die
                         Anfertigung von Stimmenmaterial</title>
                   </analytic>
@@ -48,7 +48,7 @@
                <biblStruct type="article">
                   <analytic>
                      <title> »auch auf gesanglichem Gebiete überaus thätig«. Max Reger und das Lied</title>
-                     <author>Dennis Ried</author>
+                     <author>Ried, Dennis</author>
                   </analytic>
                   <monogr>
                      <title>Musik in Baden-Württemberg. Jahrbuch 2019/2020</title>
@@ -82,16 +82,15 @@
                <biblStruct type="article">
                   <analytic>
                      <author>Ried, Dennis</author>
-                     <title>Erhebung, Transformation und Präsentation digitaler Forschungsdaten</title>
-                     <ref target="https://nbn-resolving.org/urn:nbn:de:bsz:14-qucosa2-727405"
-                        >https://nbn-resolving.org/urn:nbn:de:bsz:14-qucosa2-727405</ref>
+                     <title><ref target="https://nbn-resolving.org/urn:nbn:de:bsz:14-qucosa2-727405"
+                        >Erhebung, Transformation und Präsentation digitaler Forschungsdaten</ref></title>
                   </analytic>
                   <monogr>
                      <title>Brückenschläge zwischen Musikwissenschaft und Informatik. Theoretische und praktische
                         Aspekte der Kooperation</title>
-                     <editor>Stefanie Acquavella-Rauch</editor>
-                     <editor>Andreas Münzmay</editor>
-                     <editor>Joachim Veit</editor>
+                     <editor>Acquavella-Rauch, Stefanie</editor>
+                     <editor>Münzmay, Andreas</editor>
+                     <editor>Veit, Joachim</editor>
                      <imprint>
                         <publisher>musiconn.publish</publisher>
                         <date>2020</date>
@@ -124,30 +123,38 @@
                   <analytic>
                      <title>Creating, transforming and representing data at Baumann-Digital and
                         Joachim-Raff-Archiv</title>
-                     <author>Dennis Ried</author>
+                     <author>Ried, Dennis</author>
                   </analytic>
                   <monogr>
                      <imprint>
-                        <date>May 2019</date>
+                        <date when-custom="2019-05">2019</date>
                         <publisher>Music-Encoding-Conference</publisher>
                         <pubPlace>Wien</pubPlace>
                      </imprint>
                   </monogr>
                </biblStruct>
                <biblStruct type="review">
+                  <analytic>
+                     <author>Ried, Dennis</author>
+                     <title>Folgenreich: Reformation und Kulturgeschichte. Buchbesprechung</title>
+                  </analytic>
                   <monogr>
+                     <title>Mitteilungen</title>
+                     <editor>Almut Ochsmann im Auftrag der Internationalen Max-Reger-Gesellschaft</editor>
                      <imprint>
-                        <date>2016</date>
+                        <biblScope from="27" to="29"/>
+                        <biblScope unit="issue">32</biblScope>
+                        <date>2017</date>
                      </imprint>
                   </monogr>
                </biblStruct>
                <biblStruct type="article">
                   <analytic>
                      <title>Musikalische Schrift und Digitalität. Ein Werkstattbericht</title>
-                     <author>Julia Freund</author>
-                     <author>Stefan Münnich</author>
-                     <author>Dennis Ried</author>
-                     <author>Michelle Ziegler</author>
+                     <author>Freund, Julia</author>
+                     <author>Münnich, Stefan</author>
+                     <author>Ried, Dennis</author>
+                     <author>Ziegler, Michelle</author>
                      <ref target="https://kontrovers.musiconn.de/2021/01/17/musikalische-schrift-und-digitalitaet/"
                         >KONTROVERS musiconn.blog</ref>
                   </analytic>

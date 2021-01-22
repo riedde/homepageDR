@@ -91,11 +91,41 @@ declare function shared:getSelectedLanguage($node as node()*,$selectedLang as xs
     shared:get-lang()
 };
 
-declare function shared:getDate($date as node()?, $param as xs:string) as xs:string{
-let $dateFrom := $date/@from-custom/string()
-let $dateTo := $date/@to-custom/string()
-let $dateWhen := $date/@when-custom/string()
 
-return
-    if($dateTo)then(concat($dateFrom, '–', $dateTo))else(concat(shared:translate('since'), ' ', $dateFrom))
+declare function shared:getDate($date as node(), $param as xs:string, $lang as xs:string) {
+
+  let $dateFrom := $date/@from-custom/string()
+  let $dateTo := $date/@to-custom/string()
+  let $dateWhen := $date/@when-custom/string()
+  
+  let $dateFromFormatted := if(string-length($dateFrom) = 4)
+                            then($dateFrom)
+                            else if(string-length($dateFrom) = 7)
+                            then(format-date(xs:date(concat($dateFrom,'-01')), '[MNn,3-3]. [Y]', $lang, (), ()))
+                            else (format-date(xs:date($dateFrom), '[MNn,3-3]. [Y]', $lang, (), ()))
+  
+  let $dateToFormatted := if(string-length($dateTo) = 4)
+                            then($dateTo)
+                            else if(string-length($dateTo) = 7)
+                            then(format-date(xs:date(concat($dateTo,'-01')), '[MNn,3-3]. [Y]', $lang, (), ()))
+                            else (format-date(xs:date($dateTo), '[MNn,3-3]. [Y]', $lang, (), ()))
+  let $dateWhenFormatted := if(string-length($dateWhen) = 4)
+                            then($dateWhen)
+                            else if(string-length($dateWhen) = 7)
+                            then(format-date(xs:date(concat($dateWhen,'-01')), '[MNn,3-3]. [Y]', $lang, (), ()))
+                            else (format-date(xs:date($dateWhen), '[MNn,3-3]. [Y]', $lang, (), ()))
+  
+  return
+      functx:replace-multi(
+      if ($dateFrom and $dateTo)
+      then (concat($dateFromFormatted, '–', $dateToFormatted))
+      else if ($dateTo)
+      then (concat('to', ' ', $dateToFormatted))
+      else if ($dateFrom)
+      then (concat(shared:translate('since'), ' ', $dateFromFormatted))
+      else if ($dateWhen)
+      then ($dateWhenFormatted)
+      else (),
+      ('Mai.', 'May.'), ('Mai', 'May'))
+    
 };

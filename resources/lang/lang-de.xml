@@ -6,6 +6,7 @@
     <msg key="education">Ausbildung</msg>
     <msg key="skills">Fähigkeiten</msg>
     <msg key="projects">Projekte</msg>
+    <msg key="organisations">Organisationen</msg>
     <msg key="conferences">Tagungen</msg>
     <msg key="papers">Veröffentlichungen</msg>
     
@@ -15,6 +16,19 @@
     
     <!-- Education -->
     <msg key="since">Seit</msg>
+    <msg key="to">Bis</msg>
+    
+    <!-- Bibl -->
+    <msg key="editedBy">Hg. von</msg>
+    <msg key="issue">Heft</msg>
+    <msg key="noDate">[o. Datum]</msg>
+    <msg key="noPlace">[o. Ort]</msg>
+    <msg key="page">S.</msg>
+    <msg key="article">Artikel</msg>
+    <msg key="poster">Poster</msg>
+    <msg key="book">Bücher</msg>
+    <msg key="review">Rezensionen</msg>
+    <msg key="editions">Editionen</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">Diese Seite verwendet Cookies um eine gute Performacne zu garantieren (z.B. Spracheinstellung)</msg>

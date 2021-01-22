@@ -58,12 +58,12 @@
                      <note type="grade" subtype="GPA">3.7</note>
                   </education>
                   <occupation>
-                     <label xml:lang="de">Wissenschaftlicher Mitarbeiter, Reger-Werkausgabe (Editor)</label>
-                     <label xml:lang="en">Research assistant, Reger-Edition (Editor)</label>
-                     <orgName xml:lang="de">Max-Reger-Institut Karlsruhe</orgName>
-                     <orgName xml:lang="en">Max-Reger-Institute Karlsruhe</orgName>
+                     <label xml:lang="de">Wissenschaftlicher Mitarbeiter (Editor)</label>
+                     <label xml:lang="en">Research assistant (Editor)</label>
+                     <orgName xml:lang="de">Max-Reger-Institut Karlsruhe, Reger-Werkausgabe</orgName>
+                     <orgName xml:lang="en">Max-Reger-Institute Karlsruhe, Reger-Edition</orgName>
                      <date from-custom="2019-05"/>
-                     <desc xml:lang="de">Edition von Werken Max Regers, Aufbau der digitalen Edition (Edirom), Forschungsdatenmanagement (Bestandsvalidierung, Schema und Dokumentation) und Unterstützung in der Entwicklung neuer Features für das Max-Reger-Portal (MRP)</desc>
+                     <desc xml:lang="de">Edition von Werken Max Regers, Unterstützung beim Aufbau der digitalen Edition (Edirom), Forschungsdatenmanagement (Bestandsvalidierung, Schema und Dokumentation) und Unterstützung in der Entwicklung neuer Features für das Max-Reger-Portal (MRP)</desc>
                      <desc xml:lang="en"></desc>
                   </occupation>
                   <occupation>
@@ -72,7 +72,7 @@
                      <orgName xml:lang="de">Max-Reger-Institut Karlsruhe, Reger-Werkausgabe</orgName>
                      <orgName xml:lang="en">Max-Reger-Institute Karlsruhe, Reger-Edition</orgName>
                      <date from-custom="2018-05" to-custom="2019-04"/>
-                     <desc xml:lang="de">Aufbau der digitalen Edition, Unterstützung im Forschungsdatenmanagement, Programmierung von Features für die Reger-Werkausgabe</desc>
+                     <desc xml:lang="de">Aufbau der digitalen Edition (Edirom), Unterstützung im Forschungsdatenmanagement, Programmierung von Features für die Reger-Werkausgabe</desc>
                      <desc xml:lang="en"></desc>
                   </occupation>
                   <occupation>

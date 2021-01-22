@@ -31,8 +31,8 @@ declare function app:about($node as node(), $model as map(*)) {
             {$settlement} · {shared:translate(concat('country-',$country))} · <a href="mailto:{$email}">{$email}</a>
         </div>
         <p class="lead mb-4">{$text}</p>
-        <p class="lead mb-3">Orcid-ID: <a href="https://orcid.org/{$orchid}" target="_blank">{$orchid}</a></p>
-        <div class="social-icons row">
+        <!--<p class="lead mb-3">Orcid-ID: <a href="https://orcid.org/{$orchid}" target="_blank">{$orchid}</a></p>-->
+        <div class="social-icons row" style="padding-left: 1em;">
             {
                 for $link in $socialLinks
                     let $tokens := tokenize($link/@target,' ')
@@ -46,6 +46,32 @@ declare function app:about($node as node(), $model as map(*)) {
                             <i class="fab fa-{$label}"/>
                         </a>
             }
+        </div>
+    </div>
+};
+
+declare function app:experience($node as node(), $model as map(*)) {
+
+let $lang := request:get-parameter ('lang', ())
+let $doc := doc('/db/apps/homepageDR/content/about.xml')
+
+let $occList := $doc//tei:occupation
+
+for $occ in $occList
+
+let $label := $occ//tei:label[@xml:lang = $lang]
+let $org := $occ//tei:orgName[@xml:lang = $lang]
+let $desc := $occ//tei:desc[@xml:lang = $lang]
+let $date := shared:getDate($occ/tei:date, 'full', $lang)
+return
+    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+        <div class="flex-grow-1">
+            <h3 class="mb-0">{$label}</h3>
+            <div class="subheading mb-3">{$org}</div>
+            <p>{$desc}</p>
+        </div>
+        <div class="flex-shrink-0">
+            <span class="text-primary">{$date}</span>
         </div>
     </div>
 };
@@ -71,7 +97,7 @@ let $grade := if($lang = 'en' and $gradeGPA)
               else if($lang = 'de' and $gradeNote)
               then('Note: ', $gradeNote)
               else()
-let $date := shared:getDate($edu//tei:date, 'full')
+let $date := shared:getDate($edu/tei:date, 'full', $lang)
 
 return
     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -86,32 +112,6 @@ return
         </div>
 };
 
-declare function app:experience($node as node(), $model as map(*)) {
-
-let $lang := request:get-parameter ('lang', ())
-let $doc := doc('/db/apps/homepageDR/content/about.xml')
-
-let $occList := $doc//tei:occupation
-
-for $occ in $occList
-
-let $label := $occ//tei:label[@xml:lang = $lang]
-let $org := $occ//tei:orgName[@xml:lang = $lang]
-let $desc := $occ//tei:desc[@xml:lang = $lang]
-let $date := shared:getDate($org//tei:date, 'full')
-return
-    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-        <div class="flex-grow-1">
-            <h3 class="mb-0">{$label}</h3>
-            <div class="subheading mb-3">{$org}</div>
-            <p>{$desc}</p>
-        </div>
-        <div class="flex-shrink-0">
-            <span class="text-primary">{$date}</span>
-        </div>
-    </div>
-};
-
 declare function app:bibliography($node as node(), $model as map(*)) {
     let $bibliography := doc('/db/apps/homepageDR/content/bibliography.xml')/tei:TEI
     
@@ -121,14 +121,78 @@ declare function app:bibliography($node as node(), $model as map(*)) {
     
     for $biblType in $biblTypes
         return
-            (<h3>{$biblType}</h3>,
+            (<h3>{shared:translate($biblType)}</h3>,
              <ul>{for $biblItem in $biblItems[@type=$biblType]
-                                let $biblType := $biblItem/@type/string()
-                                return
-                                   <li type="{$biblType}">{$biblItem}</li>}</ul>)
+                     return
+                         <li>{app:styleBibl($biblItem, $biblType)}</li>}
+             </ul>)
+};
+
+declare function app:styleBibl($biblItem as node(), $biblType as xs:string) {
+let $analytic := $biblItem/tei:analytic
+let $monogr := $biblItem/tei:monogr
+
+let $monoTitle := $monogr/tei:title/string()
+let $monoEditors := $monogr/tei:editor
+let $monoEditor := if(count($monoEditors)=1)
+                   then($monoEditors)
+                   else if (count($monoEditors) <= 3)
+                   then(string-join($monoEditors, '/'))
+                   else if (count($monoEditors) > 3)
+                   then(concat(string-join(subsequence($monoEditors,1,2), '/'), ' et.al.'))
+                   else('[N.N.]')
+let $monoAuthors := $monogr/tei:author
+let $monoAuthor := if(count($monoAuthors)=1)
+                  then($monoAuthors)
+                  else if (count($monoAuthors) <= 3)
+                  then(string-join($monoAuthors, '/'))
+                  else if (count($monoAuthors) > 3)
+                  then(concat(string-join(subsequence($monoAuthors,1,2), '/'), ' et.al.'))
+                  else('[N.N.]')
+
+let $monoScopePages := if($monogr//tei:biblScope/@from = $monogr//tei:biblScope/@to)
+                       then($monogr//tei:biblScope/@from/string())
+                       else if($monogr//tei:biblScope/@from and $monogr//tei:biblScope/@to)
+                       then(concat($monogr//tei:biblScope/@from, '–', $monogr//tei:biblScope/@to))
+                       else()
+let $monoScopeIssue := $monogr//tei:biblScope[@unit='issue']/text()
+let $monoPubPlace := $monogr//tei:pubPlace/text()
+let $monoPubDate := $monogr//tei:date/text()
+
+let $anaTitle := $analytic/tei:title/text()
+let $anaAuthors := $analytic/tei:author
+let $anaAuthor := if(count($anaAuthors)=1)
+                  then($anaAuthors)
+                  else if (count($anaAuthors) <= 3)
+                  then(string-join($anaAuthors, '/'))
+                  else if (count($anaAuthors) > 3)
+                  then(concat(string-join(subsequence($anaAuthors,1,2), '/'), ' et.al.'))
+                  else('[N.N.]')
+let $monogrBibl := concat(
+                   if($monoAuthor)then(concat($monoAuthor, ': '))else(),
+                   $monoTitle, ', ',
+                   if($monoEditor)then(concat(shared:translate('editedBy'), ' ', $monoEditor, ', '))else(),
+                   if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
+                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(),
+                   if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
+let $analyticBibl := concat($anaAuthor, ': ', $anaTitle, ', in: ', $monogrBibl, if($monoScopePages)then(concat(', ', shared:translate('page'), ' ', $monoScopePages))else())
+let $posterBibl := concat($anaAuthor, ': ', $anaTitle, if($monoPubPlace) then(concat(', ', $monoPubPlace, ' ')) else(shared:translate('noPlace')), if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
+
+let $monoRef := $monogr//tei:ref/@target
+let $anaRef := $analytic//tei:ref/@target
+
+return
+    if($biblType = 'article' or $biblType = 'review')
+    then(concat($analyticBibl, '.'))
+    else if($biblType = 'book')
+    then(concat($monogrBibl, '.'))
+    else if($biblType = 'poster')
+    then(concat($posterBibl, '.'))
+    else()
 };
 
 declare function app:conferences($node as node(), $model as map(*)) {
+    let $lang := request:get-parameter('lang', ())
     let $conferences := doc('/db/apps/homepageDR/content/conferences.xml')/tei:TEI
     
     let $confItems := $conferences//tei:listEvent/tei:event
@@ -143,21 +207,46 @@ declare function app:conferences($node as node(), $model as map(*)) {
                     let $label := $confItem//tei:label/text()
                     let $orgName := $confItem//tei:orgName/text()
                     let $settlement := $confItem//tei:settlement/text()
-                    let $date := shared:getDate($confItem//tei:date, 'full')
+                    let $date := shared:getDate($confItem//tei:date, 'full', $lang)
                     let $contr := $confItem//tei:desc/@type/string() (: controbution "yes", subtype="presentation" :)
                     return
                        <li type="{$confType}">{$confItem}</li>}</ul>)
 };
 
 declare function app:skills($node as node(), $model as map(*)) {
+    let $lang := request:get-parameter('lang', 'de')
     let $skillsDoc := doc('/db/apps/homepageDR/content/skills.xml')/tei:TEI
-    let $formatText := doc('/db/apps/homepageDR/resources/xslt/tei/html5/html5.xsl')
-    let $skills := $skillsDoc//tei:body
+    let $formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl')
+    let $skills := $skillsDoc//tei:body/tei:div[@xml:lang=$lang]
     
     return
         transform:transform($skills, $formatText, ())
-    };
+};
+
+declare function app:projects($node as node(), $model as map(*)) {
+    let $lang := request:get-parameter('lang', 'de')
+    let $projectsDoc := doc('/db/apps/homepageDR/content/projects.xml')/tei:TEI
+    let $formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl')
+    let $projects := $projectsDoc//tei:listEvent/tei:event
+    let $orgs := $projectsDoc//tei:listOrg/tei:org
     
+    return
+        (<h3>{shared:translate('projects')}</h3>,
+         <ul>{for $project in $projects
+                let $label := $project//tei:label[@xml:lang = $lang]
+                let $date := if($project//tei:date) then(shared:getDate($project//tei:date, 'full', $lang)) else()
+                return
+                   <li>{$date} | {transform:transform($label, $formatText, ())}</li>}
+        </ul>,
+        <h3>{shared:translate('organisations')}</h3>,
+         <ul>{for $org in $orgs
+                let $label := $org//tei:label[@xml:lang = $lang]
+                let $date := if($org//tei:date) then(shared:getDate($org//tei:date, 'full', $lang)) else()
+                return
+                   <li>{transform:transform($label, $formatText, ())}</li>}
+        </ul>)
+};
+
 declare function app:langSwitch($node as node(), $model as map(*)) {
     let $supportedLangVals := ('de', 'en')
     for $lang in $supportedLangVals

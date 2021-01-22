@@ -16,22 +16,44 @@
    </teiHeader>
    <text>
       <body>
-         <p>This is about my skills.</p>
-         <p>This homepage is encoded in TEI and visualized by using XSLT (formatting Text) and xQuery (any other fancy
-            stuff)</p>
-         <p style="subheading mb-3">Programming Languages &amp; Tools</p>
-         <list style="list-inline dev-icons">
-            <item style="list-inline-item">XML Encoding with TEI</item>
-            <item style="list-inline-item">XML Encoding with MEI</item>
-            <item style="list-inline-item">xQuery</item>
-            <item style="list-inline-item">XSLT</item>
-            <item style="list-inline-item">RelaxNG (basic)</item>
-            <item style="list-inline-item">eXist-db</item>
-            <item style="list-inline-item"><ab style="fab fa-html5"/></item>
-            <item style="list-inline-item"><ab style="fab fa-css3-alt"/></item>
-            <item style="list-inline-item">Edirom</item>
-            <item style="list-inline-item">OxygenXML Frameworks</item>
-         </list>
+         <div xml:lang="de">
+            <p>Die Inhalte dieser Homepage liegen als TEI-kodierte Daten in XML vor. Dargestellt wird eine HTML5-Seite, die durch die Anwendung von X-Technologien (xQuery, XSLT) ausgelesen und aufbereitet, mit Bootstrap 4 (CSS) gestaltet und mittels JavaScript animiert wird.</p>
+            <p style="subheading mb-3">Programmiersprachen &amp; Tools</p>
+            <list rend="row">
+               <item>XML Kodierung mit TEI</item>
+               <item>XML Kodierung mit MEI</item>
+               <item>xQuery</item>
+               <item>XSLT</item>
+               <item>RelaxNG</item>
+               <item>Schematron (Grundlagen)</item>
+               <item>eXist-db</item>
+               <item>HTML 5</item>
+               <item>CSS 3</item>
+               <item>Bootstrap 4</item>
+               <item>Edirom</item>
+               <item>OxygenXML Frameworks</item>
+               <item>LaTeX</item>
+            </list>
+         </div>
+         <div xml:lang="en">
+            <p>The contents of this homepage are available as TEI-encoded data (XML). An HTML5 page is presented, which is queried and prepared using X-technologies (xQuery, XSLT), designed with Bootstrap 4 (CSS) and animated using JavaScript.</p>
+            <p style="subheading mb-3">Programming Languages &amp; Tools</p>
+            <list rend="row">
+               <item>XML Encoding with TEI</item>
+               <item>XML Encoding with MEI</item>
+               <item>xQuery</item>
+               <item>XSLT</item>
+               <item>RelaxNG</item>
+               <item>Schematron (basic)</item>
+               <item>eXist-db</item>
+               <item>HTML 5</item>
+               <item>CSS 3</item>
+               <item>Bootstrap 4</item>
+               <item>Edirom</item>
+               <item>OxygenXML Frameworks</item>
+               <item>LaTeX</item>
+            </list>
+         </div>
       </body>
    </text>
 </TEI>
