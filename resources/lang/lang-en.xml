@@ -35,7 +35,7 @@
     <msg key="book">Books</msg>
     <msg key="review">Reviews</msg>
     <msg key="edition">Editions</msg>
-    <msg key="inThePipe">in the Pipeline</msg>
+    <msg key="inThePipe">[in the Pipeline]</msg>
     <msg key="collaboration">with the collaboration of</msg>
     
     <!-- Conferences -->
@@ -43,6 +43,7 @@
     <msg key="future">future</msg>
     <msg key="presentation">Conference talk</msg>
     <msg key="confPoster">Conference poster</msg>
+    <msg key="lecturer">Lecturer</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">This page uses cookies for performance reasons (e.g. language settings)</msg>

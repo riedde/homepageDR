@@ -35,7 +35,7 @@
     <msg key="book">Bücher</msg>
     <msg key="review">Rezensionen</msg>
     <msg key="edition">Editionen</msg>
-    <msg key="inThePipe">in Vorbereitung</msg>
+    <msg key="inThePipe">[in Vorbereitung]</msg>
     <msg key="collaboration">unter Mitarbeit von</msg>
     
     <!-- Conferences -->
@@ -43,6 +43,7 @@
     <msg key="future">Zukünftige</msg>
     <msg key="presentation">Vortrag zur Konferenz</msg>
     <msg key="confPoster">Poster zur Konferenz</msg>
+    <msg key="lecturer">Dozent</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">Diese Seite verwendet Cookies um eine gute Performacne zu garantieren (z.B. Spracheinstellung)</msg>
