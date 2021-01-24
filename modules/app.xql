@@ -222,6 +222,7 @@ let $editionBibl := concat(
                            if($monoAuthor)then(concat($monoAuthor, ': '))else(),
                            $monoTitle, ', ',
                            if($monoEditor)then(concat(shared:translate('editedBy'), ' ', $monoEditor, ', '))else(),
+                           if($monoEditorColl)then(concat(' ', shared:translate('collaboration'), ' ', $monoEditorColl, ', '))else(),
                            if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
                            if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
                            if($seriesBibl) then(concat($seriesBibl, ' ')) else(),
@@ -256,7 +257,7 @@ declare function app:conferences($node as node(), $model as map(*)) {
     
     for $confType in $confTypes
         return
-            (<h3>{$confType}</h3>,
+            (<h3>{shared:translate($confType)}</h3>,
              <ul  style="list-style: square;">{for $confItem in $confItems[@type=$confType]
                     let $confType := $confItem/@type/string()
                     let $label := $confItem//tei:label/text()
