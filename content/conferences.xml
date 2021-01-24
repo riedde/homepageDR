@@ -15,8 +15,70 @@
                      <label>Tagung der Arbeitsgemeinschaft für germanistische Edition</label>
                      <orgName>Deutsches Literaturarchiv</orgName>
                      <settlement>Marbach am Neckar</settlement>
-                     <date from="2020-02-12" to="2020-02-15">12.–15. Februar 2020</date>
-                     <desc type="contribution" subtype="presentation">›Epitexte‹ in der Reger-Werkausgabe</desc>
+                     <date from-custom="2020-02-12" to-custom="2020-02-15">12.–15. Februar 2020</date>
+                     <desc type="contribution" subtype="confPoster">›Epitexte‹ in der Reger-Werkausgabe</desc>
+                  </desc>
+               </event>
+               <event type="past">
+                  <desc>
+                     <label>Edirom Summer-School</label>
+                     <orgName>Universität Paderborn/HfM Detmold</orgName>
+                     <settlement>Paderborn</settlement>
+                     <date when-custom="2020-09">Sept. 2020</date>
+                     <desc type="contribution" subtype="lecturer">Edirom/Digitale Musikedition</desc>
+                  </desc>
+               </event>
+               <event type="past">
+                  <desc>
+                     <label>Notensatz im 21. Jahrhundert Entwicklungen und Perspektiven</label>
+                     <orgName>Universität Mozarteum</orgName>
+                     <settlement>Salzburg</settlement>
+                     <date when-custom="2020-02"/>
+                     <desc type="contribution" subtype="confPoster">Grenzen der Darstellbarkeit des Notenbildes in komplexen Reger-Partituren</desc>
+                  </desc>
+               </event>
+               <event type="past">
+                  <desc>
+                     <label>Music-Encoding-Conference</label>
+                     <orgName>Universität Paderborn</orgName>
+                     <settlement>Paderborn</settlement>
+                     <date when-custom="2019-05"/>
+                     <desc type="contribution" subtype="confPoster">Creating, transforming and representing data at Baumann-Digital and Joachim-Raff-Archiv</desc>
+                  </desc>
+               </event>
+               <event type="past">
+                  <desc>
+                     <label>Edirom-Summer-School</label>
+                     <orgName>Universität Paderborn/HfM Detmold</orgName>
+                     <settlement>Paderborn</settlement>
+                     <date when-custom="2019-05"/>
+                     <desc type="contribution" subtype="confPoster">Daten, Daten, Daten -- Händische Listen vs. automatisierte Register</desc>
+                  </desc>
+               </event>
+               <event type="past">
+                  <desc>
+                     <label>Edirom-Summer-School</label>
+                     <orgName>Universität Paderborn/HfM Detmold</orgName>
+                     <settlement>Paderborn</settlement>
+                     <date when-custom="2017-09"/>
+                     <desc type="contribution" subtype="confPoster">BauDi -- Digitales Konvolut und weiter?</desc>
+                  </desc>
+               </event>
+               <event type="past">
+                  <desc>
+                     <label>Kalliwoda-Tagung</label>
+                     <orgName>Universität Paderborn/HfM Detmold</orgName>
+                     <settlement>Donaueschingen</settlement>
+                     <date when-custom="2016-12"/>
+                     <desc type="contribution" subtype="confPoster">Digitale Edition von Werken Kalliwodas und der Versuch der Integration in das Onlineangebot der Badischen Landesbibliothek</desc>
+                  </desc>
+               </event>
+               <event type="past">
+                  <desc>
+                     <label>eXist-bootcamp: xQuery + eXist-db for Humanists</label>
+                     <orgName>Université Lumière Lyon 2</orgName>
+                     <settlement>Donaueschingen</settlement>
+                     <date from-custom="2020-11" to-custom="2021-03"/>
                   </desc>
                </event>
             </listEvent>
