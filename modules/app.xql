@@ -6,6 +6,7 @@ import module namespace i18n = "http://exist-db.org/xquery/i18n" at "/db/apps/ho
 import module namespace templates="http://exist-db.org/xquery/templates";
 import module namespace config="http://exist-db.org/xquery/config" at "/db/apps/homepageDR/modules/config.xqm";
 import module namespace shared="http://dennisried.de/shared" at "/db/apps/homepageDR/modules/shared.xql";
+import module namespace functx="http://www.functx.com" at "/db/apps/homepageDR/modules/functx.xqm";
 
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 declare namespace mei = "http://www.music-encoding.org/ns/mei";
@@ -120,26 +121,43 @@ declare function app:bibliography($node as node(), $model as map(*)) {
     let $biblTypes := distinct-values($biblItems/@type/string())
     
     for $biblType in $biblTypes
+        
         return
             (<h3>{shared:translate($biblType)}</h3>,
              <ul style="list-style: square;">{for $biblItem in $biblItems[@type=$biblType]
-                     return
+                  let $biblType := $biblItem/@type/string()
+                  let $date := $biblItem//tei:imprint/tei:date/@when-custom/string()
+                  let $titleAna := $biblItem//tei:analytic//tei:title[1]/text()
+                  let $titleMono := $biblItem//tei:monogr//tei:title[1]/text()
+                  order by $date descending, $titleAna ascending
+                  return
                          <li style="padding: 3px;">{app:styleBibl($biblItem, $biblType)}</li>}
              </ul>)
 };
 
 declare function app:styleBibl($biblItem as node(), $biblType as xs:string) {
+let $inThePipe := if($biblItem[@status="inThePipe"]) then(shared:translate('inThePipe')) else()
+
 let $analytic := $biblItem/tei:analytic
 let $monogr := $biblItem/tei:monogr
+let $series := $biblItem/tei:series
 
 let $monoTitle := $monogr/tei:title/string()
-let $monoEditors := $monogr/tei:editor
+let $monoEditors := $monogr/tei:editor[not(@role)]
 let $monoEditor := if(count($monoEditors)=1)
                    then($monoEditors)
                    else if (count($monoEditors) <= 3)
                    then(string-join($monoEditors, '/'))
                    else if (count($monoEditors) > 3)
                    then(concat(string-join(subsequence($monoEditors,1,2), '/'), ' et.al.'))
+                   else('[N.N.]')
+let $monoEditorsColl := $monogr/tei:editor[@role="collaboration"]
+let $monoEditorColl := if(count($monoEditorsColl)=1)
+                   then($monoEditorsColl)
+                   else if (count($monoEditorsColl) <= 3)
+                   then(string-join($monoEditorsColl, '/'))
+                   else if (count($monoEditorsColl) > 3)
+                   then(concat(string-join(subsequence($monoEditorsColl,1,2), '/'), ' et.al.'))
                    else('[N.N.]')
 let $monoAuthors := $monogr/tei:author
 let $monoAuthor := if(count($monoAuthors)=1)
@@ -156,8 +174,22 @@ let $monoScopePages := if($monogr//tei:biblScope/@from = $monogr//tei:biblScope/
                        then(concat($monogr//tei:biblScope/@from, '–', $monogr//tei:biblScope/@to))
                        else()
 let $monoScopeIssue := $monogr//tei:biblScope[@unit='issue']/text()
+let $monoScopeVolume := $monogr//tei:biblScope[@unit='volume']/text()
 let $monoPubPlace := $monogr//tei:pubPlace/text()
 let $monoPubDate := $monogr//tei:date/text()
+let $monoPublisher := $monogr//tei:publisher/text()
+
+let $seriesTitle := $series/tei:title[not(@type)]
+let $seriesEditors := $series/tei:editor
+let $seriesEditor := if(count($seriesEditors)=1)
+                  then($seriesEditors)
+                  else if (count($seriesEditors) <= 3)
+                  then(string-join($seriesEditors, '/'))
+                  else if (count($seriesEditors) > 3)
+                  then(concat(string-join(subsequence($seriesEditors,1,2), '/'), ' et.al.'))
+                  else('[N.N.]')
+let $seriesSection := $series/tei:biblScope[@unit="section"]
+let $seriesTitleSec := $series/tei:title[@type="section"]/text()
 
 let $anaTitle := $analytic/tei:title/text()
 let $anaAuthors := $analytic/tei:author
@@ -172,11 +204,30 @@ let $monogrBibl := concat(
                    if($monoAuthor)then(concat($monoAuthor, ': '))else(),
                    $monoTitle, ', ',
                    if($monoEditor)then(concat(shared:translate('editedBy'), ' ', $monoEditor, ', '))else(),
+                   if($monoEditorColl)then(concat(' ', shared:translate('collaborator'), ' ', $monoEditorColl, ', '))else(),
                    if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
+                   if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
+                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(),
+                   if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
+                           if($inThePipe) then(concat(', ',$inThePipe))else())
+let $analyticBibl := concat($anaAuthor, ': ', $anaTitle, ', in: ', $monogrBibl, if($monoScopePages)then(concat(', ', shared:translate('page'), ' ', $monoScopePages))else(),
+                           if($inThePipe) then(concat(', ',$inThePipe))else())
+let $seriesBibl := concat($seriesTitle, ', ', shared:translate('editedBy'),' ',$seriesEditor, ', ', shared:translate('section'),' ', $seriesSection, ' ', $seriesTitleSec, ', ')
+
+let $posterBibl := concat($anaTitle, ', ', $monoPublisher, if($monoPubPlace) then(concat(', ', $monoPubPlace, ' ')) else(shared:translate('noPlace')), if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
+let $termPaperBibl := concat($monoTitle, ', ',
                    if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(),
                    if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
-let $analyticBibl := concat($anaAuthor, ': ', $anaTitle, ', in: ', $monogrBibl, if($monoScopePages)then(concat(', ', shared:translate('page'), ' ', $monoScopePages))else())
-let $posterBibl := concat($anaAuthor, ': ', $anaTitle, if($monoPubPlace) then(concat(', ', $monoPubPlace, ' ')) else(shared:translate('noPlace')), if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
+let $editionBibl := concat(
+                           if($monoAuthor)then(concat($monoAuthor, ': '))else(),
+                           $monoTitle, ', ',
+                           if($monoEditor)then(concat(shared:translate('editedBy'), ' ', $monoEditor, ', '))else(),
+                           if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
+                           if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
+                           if($seriesBibl) then(concat($seriesBibl, ' ')) else(),
+                           if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(),
+                           if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
+                           if($inThePipe) then(concat(', ',$inThePipe))else())
 
 let $monoRef := $monogr//tei:ref/@target
 let $anaRef := $analytic//tei:ref/@target
@@ -188,6 +239,10 @@ return
     then(concat($monogrBibl, '.'))
     else if($biblType = 'poster')
     then(concat($posterBibl, '.'))
+    else if($biblType = 'termPaper')
+    then(concat($termPaperBibl, '.'))
+    else if($biblType = 'edition')
+    then(concat($editionBibl, '.'))
     else()
 };
 
@@ -208,9 +263,13 @@ declare function app:conferences($node as node(), $model as map(*)) {
                     let $orgName := $confItem//tei:orgName/text()
                     let $settlement := $confItem//tei:settlement/text()
                     let $date := shared:getDate($confItem//tei:date, 'full', $lang)
-                    let $contr := $confItem//tei:desc/@type/string() (: controbution "yes", subtype="presentation" :)
+                    let $contr := $confItem//tei:desc[@type="contribution"]/text()
+                    let $contrType := $confItem//tei:desc[@type="contribution"]/@subtype/string()
                     return
-                       <li style="padding: 3px;" type="{$confType}">{$confItem}</li>}</ul>)
+                       <li style="padding: 3px;" type="{$confType}">
+                            {concat(if($contr) then(concat($contr, ', ', shared:translate($contrType), ': ')) else(), $label, ', ', $orgName, ', ', $settlement, ' ', $date, '.')
+                       }</li>
+             }</ul>)
 };
 
 declare function app:skills($node as node(), $model as map(*)) {
