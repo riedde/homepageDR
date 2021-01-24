@@ -223,16 +223,16 @@ declare function app:skills($node as node(), $model as map(*)) {
         transform:transform($skills, $formatText, ())
 };
 
-declare function app:projects($node as node(), $model as map(*)) {
+declare function app:commitment($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
-    let $projectsDoc := doc('/db/apps/homepageDR/content/projects.xml')/tei:TEI
+    let $commitmentDoc := doc('/db/apps/homepageDR/content/commitment.xml')/tei:TEI
     let $formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl')
-    let $projects := $projectsDoc//tei:listEvent/tei:event
-    let $orgs := $projectsDoc//tei:listOrg/tei:org
+    let $commitment := $commitmentDoc//tei:listEvent/tei:event
+    let $orgs := $commitmentDoc//tei:listOrg/tei:org
     
     return
-        (<h3>{shared:translate('projects')}</h3>,
-         <ul>{for $project in $projects
+        (<h3>{shared:translate('commitment')}</h3>,
+         <ul>{for $project in $commitment
                 let $label := $project//tei:label[@xml:lang = $lang]
                 let $date := if($project//tei:date) then(shared:getDate($project//tei:date, 'full', $lang)) else()
                 return
