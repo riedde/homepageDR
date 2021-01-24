@@ -18,6 +18,9 @@
     <msg key="since">Since</msg>
     <msg key="to">To</msg>
     
+    <!-- Engagement -->
+    <msg key="projects">Projects</msg>
+    
     <!-- Bibl -->
     <msg key="editedBy">ed. by</msg>
     <msg key="issue">Issue</msg>

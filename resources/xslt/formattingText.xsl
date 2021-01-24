@@ -115,7 +115,7 @@
     </xsl:template>
     
     <xsl:template match="//list[@rend='row']">
-            <xsl:value-of select="string-join(item,' | ')"/>
+        <xsl:value-of select="string-join(item,' | ')"/>
     </xsl:template>
     
 </xsl:stylesheet>

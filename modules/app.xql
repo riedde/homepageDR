@@ -122,9 +122,9 @@ declare function app:bibliography($node as node(), $model as map(*)) {
     for $biblType in $biblTypes
         return
             (<h3>{shared:translate($biblType)}</h3>,
-             <ul>{for $biblItem in $biblItems[@type=$biblType]
+             <ul style="list-style: square;">{for $biblItem in $biblItems[@type=$biblType]
                      return
-                         <li>{app:styleBibl($biblItem, $biblType)}</li>}
+                         <li style="padding: 3px;">{app:styleBibl($biblItem, $biblType)}</li>}
              </ul>)
 };
 
@@ -202,7 +202,7 @@ declare function app:conferences($node as node(), $model as map(*)) {
     for $confType in $confTypes
         return
             (<h3>{$confType}</h3>,
-             <ul>{for $confItem in $confItems[@type=$confType]
+             <ul  style="list-style: square;">{for $confItem in $confItems[@type=$confType]
                     let $confType := $confItem/@type/string()
                     let $label := $confItem//tei:label/text()
                     let $orgName := $confItem//tei:orgName/text()
@@ -210,7 +210,7 @@ declare function app:conferences($node as node(), $model as map(*)) {
                     let $date := shared:getDate($confItem//tei:date, 'full', $lang)
                     let $contr := $confItem//tei:desc/@type/string() (: controbution "yes", subtype="presentation" :)
                     return
-                       <li type="{$confType}">{$confItem}</li>}</ul>)
+                       <li style="padding: 3px;" type="{$confType}">{$confItem}</li>}</ul>)
 };
 
 declare function app:skills($node as node(), $model as map(*)) {
@@ -231,19 +231,19 @@ declare function app:commitment($node as node(), $model as map(*)) {
     let $orgs := $commitmentDoc//tei:listOrg/tei:org
     
     return
-        (<h3>{shared:translate('commitment')}</h3>,
-         <ul>{for $project in $commitment
+        (<h3>{shared:translate('projects')}</h3>,
+         <ul style="list-style: square;">{for $project in $commitment
                 let $label := $project//tei:label[@xml:lang = $lang]
                 let $date := if($project//tei:date) then(shared:getDate($project//tei:date, 'full', $lang)) else()
                 return
-                   <li>{$date} | {transform:transform($label, $formatText, ())}</li>}
+                   <li style="padding: 3px;">{$date} | {transform:transform($label, $formatText, ())}</li>}
         </ul>,
         <h3>{shared:translate('organisations')}</h3>,
-         <ul>{for $org in $orgs
+         <ul style="list-style: square;">{for $org in $orgs
                 let $label := $org//tei:label[@xml:lang = $lang]
                 let $date := if($org//tei:date) then(shared:getDate($org//tei:date, 'full', $lang)) else()
                 return
-                   <li>{transform:transform($label, $formatText, ())}</li>}
+                   <li style="padding: 3px;">{transform:transform($label, $formatText, ())}</li>}
         </ul>)
 };
 

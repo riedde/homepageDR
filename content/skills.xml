@@ -29,9 +29,11 @@
    <text>
       <body>
          <div xml:lang="de">
-            <p>Die Inhalte dieser Homepage liegen als TEI-kodierte Daten in XML vor. Dargestellt wird eine HTML5-Seite, die durch die Anwendung von X-Technologien (xQuery, XSLT) ausgelesen und aufbereitet, mit Bootstrap 4 (CSS) gestaltet und mittels JavaScript animiert wird.</p>
+            <p style="subheading mb-3">Alles »nur« Code</p>
+            <p>Die Inhalte dieser Homepage liegen komplett als TEI-kodierte Daten in XML vor. Dargestellt wird eine HTML5-Seite, die unter Anwendung der X-Technologien (xQuery, XSLT) ausgelesen und aufbereitet, mit Bootstrap 4 (CSS) gestaltet und mittels JavaScript animiert wird.</p>
             <p style="subheading mb-3">Programmiersprachen &amp; Tools</p>
-            <list rend="row">
+            <p style="mb-3">
+               <list rend="row">
                <item>XML Kodierung mit TEI</item>
                <item>XML Kodierung mit MEI</item>
                <item>xQuery</item>
@@ -46,11 +48,16 @@
                <item>OxygenXML Frameworks</item>
                <item>LaTeX</item>
             </list>
+            </p>
+            <p style="subheading mb-3">Interdisziplinäre Zusammenarbeit</p>
+            <p>Durch den Einsatz von wissenschaftlicher Expertiese und technischen Fähigkeiten lassen sich Projekte wie das <ref target="https://portal.raff-archiv.ch/index.html">Online-Portal</ref> des Joachim-Raff-Archivs (JRA) realisieren. Das Portal des JRA ist ein Projekt, in dem ein solides Datenmanagement, offene Kommunikation, wissenschaftliche Sorgfalt und anwendungsspezifische technische Lösungen die Qualität und Präsentation der Forschungnsdaten sicher stellen. Nur in Kombination können all diese Fachbereiche zu einem zeigemäßen Ergebnis führen.</p>
          </div>
          <div xml:lang="en">
-            <p>The contents of this homepage are available as TEI-encoded data (XML). An HTML5 page is presented, which is queried and prepared using X-technologies (xQuery, XSLT), designed with Bootstrap 4 (CSS) and animated using JavaScript.</p>
+            <p style="subheading mb-3">All »just« Code</p>
+            <p>The contents of this homepage are completely available as TEI-encoded data in XML. An HTML5 page is presented, which is read and prepared using X technologies (xQuery, XSLT), designed with Bootstrap 4 (CSS) and animated using JavaScript.</p>
             <p style="subheading mb-3">Programming Languages &amp; Tools</p>
-            <list rend="row">
+            <p style="mb-3">
+               <list rend="row">
                <item>XML Encoding with TEI</item>
                <item>XML Encoding with MEI</item>
                <item>xQuery</item>
@@ -65,6 +72,9 @@
                <item>OxygenXML Frameworks</item>
                <item>LaTeX</item>
             </list>
+            </p>
+            <p style="subheading mb-3">Interdisciplinary cooperation</p>
+            <p>By using scientific expertise and technical skills, projects like the <ref target="https://portal.raff-archiv.ch/index.html">online portal</ref> of the Joachim Raff Archives (JRA) can be realised. The JRA portal is a project in which solid data management, open communication, scientific diligence and application-specific technical solutions ensure the quality and presentation of research data. Only in combination can all of these disciplines lead to a showworthy result.</p>
          </div>
       </body>
    </text>

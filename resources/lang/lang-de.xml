@@ -4,7 +4,7 @@
     <msg key="about">Über mich</msg>
     <msg key="experience">Berufserfahrung</msg>
     <msg key="education">Ausbildung</msg>
-    <msg key="skills">Fähigkeiten</msg>
+    <msg key="skills">Kompetenzen</msg>
     <msg key="commitment">Engagement</msg>
     <msg key="organisations">Organisationen</msg>
     <msg key="conferences">Tagungen</msg>
@@ -17,6 +17,9 @@
     <!-- Education -->
     <msg key="since">Seit</msg>
     <msg key="to">Bis</msg>
+    
+    <!-- Engagement -->
+    <msg key="projects">Projekte</msg>
     
     <!-- Bibl -->
     <msg key="editedBy">Hg. von</msg>
