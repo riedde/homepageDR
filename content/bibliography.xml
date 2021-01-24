@@ -26,7 +26,7 @@
                      <imprint>
                         <biblScope from="11" to="13"/>
                         <biblScope unit="issue">29</biblScope>
-                        <date>2016</date>
+                        <date when-custom="2016">2016</date>
                      </imprint>
                   </monogr>
                </biblStruct>
@@ -41,7 +41,7 @@
                      <imprint>
                         <biblScope from="7" to="15"/>
                         <biblScope unit="issue">35</biblScope>
-                        <date>2019</date>
+                        <date when-custom="2019">2019</date>
                      </imprint>
                   </monogr>
                </biblStruct>
@@ -54,13 +54,13 @@
                      <title>Musik in Baden-Württemberg. Jahrbuch 2019/2020</title>
                      <imprint>
                         <pubPlace>Berlin</pubPlace>
-                        <date>2020</date>
+                        <date when-custom="2020">2020</date>
                      </imprint>
                      <biblScope from="115" to="126"/>
                      <biblScope unit="issue">25</biblScope>
                   </monogr>
                </biblStruct>
-               <biblStruct type="article">
+               <biblStruct type="article" subtype="preface">
                   <analytic>
                      <author>Ried, Dennis</author>
                      <title>Vorwort</title>
@@ -71,9 +71,9 @@
                      <imprint>
                         <pubPlace>München</pubPlace>
                         <publisher>Musikproduktion Höflich</publisher>
-                        <date>2020</date>
+                        <date when-custom="2020">2020</date>
                      </imprint>
-                     <biblScope unit="issue">4305</biblScope>
+                     <biblScope unit="volume">4305</biblScope>
                   </monogr>
                   <series>
                      <title>Repertoire Explorer</title>
@@ -82,8 +82,9 @@
                <biblStruct type="article">
                   <analytic>
                      <author>Ried, Dennis</author>
-                     <title><ref target="https://nbn-resolving.org/urn:nbn:de:bsz:14-qucosa2-727405"
-                        >Erhebung, Transformation und Präsentation digitaler Forschungsdaten</ref></title>
+                     <title>Erhebung, Transformation und Präsentation digitaler Forschungsdaten</title>
+                     <ref target="https://nbn-resolving.org/urn:nbn:de:bsz:14-qucosa2-727405"
+                        >Artikel</ref>
                   </analytic>
                   <monogr>
                      <title>Brückenschläge zwischen Musikwissenschaft und Informatik. Theoretische und praktische
@@ -93,7 +94,7 @@
                      <editor>Veit, Joachim</editor>
                      <imprint>
                         <publisher>musiconn.publish</publisher>
-                        <date>2020</date>
+                        <date when-custom="2020">2020</date>
                      </imprint>
                      <biblScope from="41" to="45"/>
                   </monogr>
@@ -111,7 +112,7 @@
                      <imprint>
                         <publisher/>
                         <pubPlace>Würzburg</pubPlace>
-                        <date>2021</date>
+                        <date when-custom="2021">2021</date>
                      </imprint>
                      <biblScope from="155" to="176"/>
                   </monogr>
@@ -144,7 +145,7 @@
                      <imprint>
                         <biblScope from="27" to="29"/>
                         <biblScope unit="issue">32</biblScope>
-                        <date>2017</date>
+                        <date when-custom="2017">2017</date>
                      </imprint>
                   </monogr>
                </biblStruct>
@@ -161,9 +162,203 @@
                   <monogr>
                      <title>KONTROVERS musiconn.blog</title>
                      <imprint>
-                        <date when="2021-01-17">17. Jan. 2021</date>
+                        <date when-custom="2021-01-17">17. Jan. 2021</date>
                      </imprint>
                   </monogr>
+               </biblStruct>
+               <biblStruct type="poster">
+                  <analytic>
+                     <title>Creating, transforming and representing data at Baumann-Digital and Joachim-Raff-Archiv</title>
+                     <author>Ried, Dennis</author>
+                  </analytic>
+                  <monogr>
+                     <imprint>
+                        <date when-custom="2019-09">2019</date>
+                        <publisher>Jahrestagung der Gesellschaft für Musikforschung</publisher>
+                        <pubPlace>Paderborn</pubPlace>
+                     </imprint>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="poster">
+                  <analytic>
+                     <title>Daten, Daten, Daten – Händische Listen vs. automatisierte Register</title>
+                     <author>Ried, Dennis</author>
+                  </analytic>
+                  <monogr>
+                     <imprint>
+                        <date when-custom="2018-09">2018</date>
+                        <publisher>Edirom-Summer-School</publisher>
+                        <pubPlace>Paderborn</pubPlace>
+                     </imprint>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="poster">
+                  <analytic>
+                     <title>BauDi – Digitales Konvolut und weiter?</title>
+                     <author>Ried, Dennis</author>
+                  </analytic>
+                  <monogr>
+                     <imprint>
+                        <date when-custom="2017-09">2017</date>
+                        <publisher>Edirom-Summer-School</publisher>
+                        <pubPlace>Paderborn</pubPlace>
+                     </imprint>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="poster">
+                  <analytic>
+                     <title>Musikmanuskriptvermittlung. Zwischen Scans und Benutzern</title>
+                     <author>Ried, Dennis</author>
+                  </analytic>
+                  <monogr>
+                     <imprint>
+                        <date when-custom="2016-09">2016</date>
+                        <publisher>Edirom-Summer-School</publisher>
+                        <pubPlace>Paderborn</pubPlace>
+                     </imprint>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="poster">
+                  <analytic>
+                     <title>Mögliche digitale Zusatzangebote bei der Manuskriptdigitalisierung von wissenschaftlichen Bibliotheken am Beispiel ausgewählter Werke des Komponisten Johann Wenzel Kalliwoda in der Badischen Landesbibliothek</title>
+                     <author>Ried, Dennis</author>
+                  </analytic>
+                  <monogr>
+                     <imprint>
+                        <date when-custom="2016-09">2016</date>
+                        <publisher>Internationaler Kongress der Gesellschaft für Musikforschung</publisher>
+                        <pubPlace>Mainz</pubPlace>
+                     </imprint>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="edition">
+                  <monogr>
+                     <title>Vokalwerke mit Orgelbegleitung und weiteren Instrumenten</title>
+                     <author>Max Reger</author>
+                     <editor>Alexander Becker</editor><editor>Christopher Grafschmidt</editor><editor>Stefan König</editor>
+                     <editor role="collaboration">Stefanie Steiner-Grage</editor>
+                     <editor role="collaboration">Dennis Ried</editor>
+                     <imprint>
+                        <pubPlace>Stuttgart</pubPlace>
+                        <date when="2019">2019</date>
+                     </imprint>
+                     <biblScope unit="volume">7</biblScope>
+                     
+                  </monogr>
+                  <series>
+                     <title>Max Reger Werkausgabe. Wissenschaftlich-kritische Hybrid-Edition von Werken und Quellen</title>
+                     <editor>Susanne Popp</editor><editor>Thomas Seedorf</editor>
+                     <biblScope unit="section">II</biblScope>
+                     <title type="section">Lieder und Chöre</title>
+                  </series>
+               </biblStruct>
+               <biblStruct type="termPaper">
+                  <monogr>
+                     <title>„Welch ein Geschwätz“. Robert Walsers „Jakob von Gunten“</title>
+                     <author>Dennis Ried</author>
+                     <imprint>
+                        <pubPlace>München</pubPlace>
+                        <date>2014</date>
+                     </imprint>
+                     <biblScope unit="page"></biblScope>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="termPaper">
+                  <monogr>
+                     <title>Bedeutung und Einfluss der Universität im späten Mittelalter</title>
+                     <author>Dennis Ried</author>
+                     <imprint>
+                        <pubPlace>München</pubPlace>
+                        <date>2014</date>
+                     </imprint>
+                     <biblScope unit="page"></biblScope>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="termPaper">
+                  <monogr>
+                     <title>Sein und Schein in Theodor Fontanes „Frau Jenny Treibel“</title>
+                     <author>Dennis Ried</author>
+                     <imprint>
+                        <pubPlace>München</pubPlace>
+                        <date>2014</date>
+                     </imprint>
+                     <biblScope unit="page"></biblScope>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="termPaper">
+                  <monogr>
+                     <title>Kommunikationsprobleme. Aspekte der Fingerepisoden in Ulrichs von Liechtenstein „Frauendienst“</title>
+                     <author>Dennis Ried</author>
+                     <imprint>
+                        <pubPlace>München</pubPlace>
+                        <date>2014</date>
+                     </imprint>
+                     <biblScope unit="page"></biblScope>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="termPaper">
+                  <monogr>
+                     <title>Licht, Wetter und Farben in Gottfried Kellers „Romeo und Julia auf dem Dorfe“</title>
+                     <author>Dennis Ried</author>
+                     <imprint>
+                        <pubPlace>München</pubPlace>
+                        <date>2014</date>
+                     </imprint>
+                     <biblScope unit="page"></biblScope>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="termPaper">
+                  <monogr>
+                     <title>Kl. 23 „Wie vil ich sing“. Analyse und Interpretation</title>
+                     <author>Dennis Ried</author>
+                     <imprint>
+                        <pubPlace>München</pubPlace>
+                        <date>2014</date>
+                     </imprint>
+                     <biblScope unit="page"></biblScope>
+                  </monogr>
+               </biblStruct>
+               <biblStruct type="edition" status="inThePipe">
+                  <monogr>
+                     <title>Lieder II</title>
+                     <author>Max Reger</author>
+                     <editor>Stefan König</editor>
+                     <editor>Dennis Ried</editor>
+                     <editor role="collaboration">Nikolaos Beer</editor>
+                     <editor role="collaboration">Christopher Grafschmidt</editor>
+                     <imprint>
+                        <pubPlace>Stuttgart</pubPlace>
+                        <date when="2021">2021</date>
+                     </imprint>
+                     <biblScope unit="volume">2</biblScope>
+                  </monogr>
+                  <series>
+                     <title>Max Reger Werkausgabe. Wissenschaftlich-kritische Hybrid-Edition von Werken und Quellen</title>
+                     <editor>Susanne Popp</editor><editor>Thomas Seedorf</editor>
+                     <biblScope unit="section">II</biblScope>
+                     <title type="section">Lieder und Chöre</title>
+                  </series>
+               </biblStruct>
+               <biblStruct type="edition" status="inThePipe">
+                  <monogr>
+                     <title>Werke für gemischten Chor a cappella II</title>
+                     <author>Max Reger</author>
+                     <editor>Stefan König</editor>
+                     <editor>Dennis Ried</editor>
+                     <editor role="collaboration">Nikolaos Beer</editor>
+                     <editor role="collaboration">Christopher Grafschmidt</editor>
+                     <imprint>
+                        <pubPlace>Stuttgart</pubPlace>
+                        <date when="2021">2021</date>
+                     </imprint>
+                     <biblScope unit="volume">9</biblScope>
+                  </monogr>
+                  <series>
+                     <title>Max Reger Werkausgabe. Wissenschaftlich-kritische Hybrid-Edition von Werken und Quellen</title>
+                     <editor>Susanne Popp</editor><editor>Thomas Seedorf</editor>
+                     <biblScope unit="section">II</biblScope>
+                     <title type="section">Lieder und Chöre</title>
+                  </series>
                </biblStruct>
             </listBibl>
          </sourceDesc>
