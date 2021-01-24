@@ -10,7 +10,19 @@
             <p>Publication Information</p>
          </publicationStmt>
          <sourceDesc>
-            <p>Information about the source</p>
+            <listEvent>
+               <event type="training">
+                  <desc>
+                     <label>Summer school: eXist-db &amp; XQuery for Humanists</label>
+                     <orgName>L'Université Lumière Lyon 2</orgName>
+                     <settlement>Lyon</settlement>
+                     <country>france</country>
+                     <date type="planned" when="2020-06">June 2020</date>
+                     <date from-custom="2020-11" to-custom="2021-03"/>
+                     
+                  </desc>
+               </event>
+            </listEvent>
          </sourceDesc>
       </fileDesc>
    </teiHeader>
