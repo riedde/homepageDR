@@ -24,14 +24,25 @@
     <!-- Bibl -->
     <msg key="editedBy">ed. by</msg>
     <msg key="issue">Issue</msg>
+    <msg key="volume">Volume</msg>
     <msg key="noDate">[no date]</msg>
     <msg key="noPlace">[no place]</msg>
     <msg key="page">p.</msg>
+    <msg key="section">Sec.</msg>
     <msg key="article">Articles</msg>
     <msg key="poster">Posters</msg>
+    <msg key="termPaper">Term Papers</msg>
     <msg key="book">Books</msg>
     <msg key="review">Reviews</msg>
-    <msg key="editions">Editions</msg>
+    <msg key="edition">Editions</msg>
+    <msg key="inThePipe">in the Pipeline</msg>
+    <msg key="collaboration">with the collaboration of</msg>
+    
+    <!-- Conferences -->
+    <msg key="past">past</msg>
+    <msg key="future">future</msg>
+    <msg key="presentation">Conference talk</msg>
+    <msg key="confPoster">Conference poster</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">This page uses cookies for performance reasons (e.g. language settings)</msg>

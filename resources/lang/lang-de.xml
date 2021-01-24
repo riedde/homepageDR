@@ -24,14 +24,25 @@
     <!-- Bibl -->
     <msg key="editedBy">Hg. von</msg>
     <msg key="issue">Heft</msg>
+    <msg key="volume">Band</msg>
     <msg key="noDate">[o. Datum]</msg>
     <msg key="noPlace">[o. Ort]</msg>
     <msg key="page">S.</msg>
+    <msg key="section">Abt.</msg>
     <msg key="article">Artikel</msg>
     <msg key="poster">Poster</msg>
+    <msg key="termPaper">Seminararbeiten</msg>
     <msg key="book">Bücher</msg>
     <msg key="review">Rezensionen</msg>
-    <msg key="editions">Editionen</msg>
+    <msg key="edition">Editionen</msg>
+    <msg key="inThePipe">in Vorbereitung</msg>
+    <msg key="collaboration">unter Mitarbeit von</msg>
+    
+    <!-- Conferences -->
+    <msg key="past">Vergangene</msg>
+    <msg key="future">Zukünftige</msg>
+    <msg key="presentation">Vortrag zur Konferenz</msg>
+    <msg key="confPoster">Poster zur Konferenz</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">Diese Seite verwendet Cookies um eine gute Performacne zu garantieren (z.B. Spracheinstellung)</msg>
