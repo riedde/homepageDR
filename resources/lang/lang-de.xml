@@ -1,0 +1,53 @@
+<catalogue xml:lang="de">
+
+    <!-- Nav -->
+    <msg key="about">Über mich</msg>
+    <msg key="experience">Berufserfahrung</msg>
+    <msg key="education">Ausbildung</msg>
+    <msg key="skills">Kompetenzen</msg>
+    <msg key="commitment">Engagement</msg>
+    <msg key="organisations">Organisationen</msg>
+    <msg key="conferences">Tagungen</msg>
+    <msg key="papers">Veröffentlichungen</msg>
+    
+    <!-- About -->
+    <msg key="country-de">Deutschland</msg>
+    <msg key="nationality-de">Deutsch</msg>
+    
+    <!-- Education -->
+    <msg key="since">Seit</msg>
+    <msg key="to">Bis</msg>
+    
+    <!-- Engagement -->
+    <msg key="projects">Projekte</msg>
+    
+    <!-- Bibl -->
+    <msg key="editedBy">Hg. von</msg>
+    <msg key="issue">Heft</msg>
+    <msg key="volume">Band</msg>
+    <msg key="noDate">[o. Datum]</msg>
+    <msg key="noPlace">[o. Ort]</msg>
+    <msg key="page">S.</msg>
+    <msg key="section">Abt.</msg>
+    <msg key="article">Artikel</msg>
+    <msg key="poster">Poster</msg>
+    <msg key="termPaper">Seminararbeiten</msg>
+    <msg key="book">Bücher</msg>
+    <msg key="review">Rezensionen</msg>
+    <msg key="edition">Editionen</msg>
+    <msg key="inThePipe">[in Vorbereitung]</msg>
+    <msg key="collaboration">unter Mitarbeit von</msg>
+    
+    <!-- Conferences -->
+    <msg key="past">Vergangene (Auswahl)</msg>
+    <msg key="future">Zukünftige</msg>
+    <msg key="presentation">Vortrag zur Konferenz</msg>
+    <msg key="confPoster">Poster zur Konferenz</msg>
+    <msg key="lecturer">Dozent</msg>
+    
+    <!-- Cookies -->
+    <msg key="cookies.notice">Diese Seite verwendet Cookies um eine gute Performacne zu garantieren (z.B. Spracheinstellung)</msg>
+    <msg key="cookies.learnMore">mehr erfahren</msg>
+    <msg key="cookies.accept">verstanden</msg>
+    
+</catalogue>
