@@ -11,9 +11,11 @@ import module namespace functx="http://www.functx.com" at "/db/apps/homepageDR/m
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 declare namespace mei = "http://www.music-encoding.org/ns/mei";
 
+declare variable $app:contentBasePath := '/db/apps/homepageDRContent/data/';
+
 declare function app:about($node as node(), $model as map(*)) {
     let $lang := request:get-parameter("lang", ())
-    let $doc := doc('/db/apps/homepageDR/content/about.xml')/tei:TEI
+    let $doc := doc($app:contentBasePath || 'about.xml')/tei:TEI
     let $person := $doc//tei:person
     
     let $forename := $person/tei:persName/tei:forename/text()
@@ -54,7 +56,7 @@ declare function app:about($node as node(), $model as map(*)) {
 declare function app:experience($node as node(), $model as map(*)) {
 
 let $lang := request:get-parameter ('lang', ())
-let $doc := doc('/db/apps/homepageDR/content/about.xml')
+let $doc := doc($app:contentBasePath || 'about.xml')
 
 let $occList := $doc//tei:occupation
 
@@ -80,7 +82,7 @@ return
 declare function app:education($node as node(), $model as map(*)) {
 
 let $lang := request:get-parameter ('lang', ())
-let $doc := doc('/db/apps/homepageDR/content/about.xml')
+let $doc := doc($app:contentBasePath || 'about.xml')
 
 let $eduList := $doc//tei:education
 
@@ -114,7 +116,7 @@ return
 };
 
 declare function app:bibliography($node as node(), $model as map(*)) {
-    let $bibliography := doc('/db/apps/homepageDR/content/bibliography.xml')/tei:TEI
+    let $bibliography := doc($app:contentBasePath || 'bibliography.xml')/tei:TEI
     
     let $biblItems := $bibliography//tei:listBibl/tei:biblStruct
     
@@ -249,7 +251,7 @@ return
 
 declare function app:conferences($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', ())
-    let $conferences := doc('/db/apps/homepageDR/content/conferences.xml')/tei:TEI
+    let $conferences := doc($app:contentBasePath || 'conferences.xml')/tei:TEI
     
     let $confItems := $conferences//tei:listEvent/tei:event
     
@@ -275,7 +277,7 @@ declare function app:conferences($node as node(), $model as map(*)) {
 
 declare function app:skills($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
-    let $skillsDoc := doc('/db/apps/homepageDR/content/skills.xml')/tei:TEI
+    let $skillsDoc := doc($app:contentBasePath || 'skills.xml')/tei:TEI
     let $formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl')
     let $skills := $skillsDoc//tei:body/tei:div[@xml:lang=$lang]
     
@@ -285,7 +287,7 @@ declare function app:skills($node as node(), $model as map(*)) {
 
 declare function app:commitment($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
-    let $commitmentDoc := doc('/db/apps/homepageDR/content/commitment.xml')/tei:TEI
+    let $commitmentDoc := doc($app:contentBasePath || 'commitment.xml')/tei:TEI
     let $formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl')
     let $commitment := $commitmentDoc//tei:listEvent/tei:event
     let $orgs := $commitmentDoc//tei:listOrg/tei:org
