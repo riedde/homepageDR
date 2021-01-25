@@ -39,8 +39,8 @@
     <msg key="collaboration">with the collaboration of</msg>
     
     <!-- Conferences -->
-    <msg key="past">past</msg>
-    <msg key="future">future</msg>
+    <msg key="past">Past (Selection)</msg>
+    <msg key="future">Future</msg>
     <msg key="presentation">Conference talk</msg>
     <msg key="confPoster">Conference poster</msg>
     <msg key="lecturer">Lecturer</msg>

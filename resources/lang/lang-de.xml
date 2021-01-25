@@ -39,7 +39,7 @@
     <msg key="collaboration">unter Mitarbeit von</msg>
     
     <!-- Conferences -->
-    <msg key="past">Vergangene</msg>
+    <msg key="past">Vergangene (Auswahl)</msg>
     <msg key="future">Zukünftige</msg>
     <msg key="presentation">Vortrag zur Konferenz</msg>
     <msg key="confPoster">Poster zur Konferenz</msg>
