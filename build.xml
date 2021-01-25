@@ -48,6 +48,12 @@
         <delete dir="build/"/>
         
     </target>
+    <target name="deployPublic">
+        <mkdir dir="buildPub"/>
+        <zip basedir="." destfile="buildPub/${project.app}_pub_${project.version}-${DSTAMP}-${TSTAMP}.xar" excludes="build/ .existdb.json"/>
+    </target>
+        
+    
     
     
     <target name="xarLocal">
