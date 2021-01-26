@@ -309,14 +309,14 @@ declare function app:commitment($node as node(), $model as map(*)) {
 };
 
 declare function app:langSwitch($node as node(), $model as map(*)) {
-    let $supportedLangVals := ('de', 'en')
-    for $lang in $supportedLangVals
-        return
-            <li class="nav-item">
+    <li class="nav-item">{
+        let $supportedLangVals := ('de', 'en')
+        for $lang in $supportedLangVals
+            return
                 <a id="{concat('lang-switch-', $lang)}"
                    class="nav-link {if(shared:get-lang() = $lang) then('active')else('')}"
-                   style="{if (shared:get-lang() = $lang) then ('color: white!important; font-weight: bold;') else ()}"
+                   style="display:inline-block; padding-right: 20px; {if (shared:get-lang() = $lang) then ('color: white!important; font-weight: bold;') else ()}"
                    href="?lang={$lang}"
                    onclick="{response:set-cookie('forceLang', $lang, 'P1D', true())}">{upper-case($lang)}</a>
-            </li>
+    }</li>
 };
