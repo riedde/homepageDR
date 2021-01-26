@@ -12,9 +12,10 @@ declare namespace tei = "http://www.tei-c.org/ns/1.0";
 declare namespace mei = "http://www.music-encoding.org/ns/mei";
 
 declare variable $app:contentBasePath := '/db/apps/homepageDRContent/data/';
+declare variable $app:formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl');
 
 declare function app:about($node as node(), $model as map(*)) {
-    let $lang := request:get-parameter("lang", ())
+    let $lang := request:get-parameter("lang", 'de')
     let $doc := doc($app:contentBasePath || 'about.xml')/tei:TEI
     let $person := $doc//tei:person
     
@@ -55,7 +56,7 @@ declare function app:about($node as node(), $model as map(*)) {
 
 declare function app:experience($node as node(), $model as map(*)) {
 
-let $lang := request:get-parameter ('lang', ())
+let $lang := request:get-parameter ('lang', 'de')
 let $doc := doc($app:contentBasePath || 'about.xml')
 
 let $occList := $doc//tei:occupation
@@ -81,7 +82,7 @@ return
 
 declare function app:education($node as node(), $model as map(*)) {
 
-let $lang := request:get-parameter ('lang', ())
+let $lang := request:get-parameter ('lang', 'de')
 let $doc := doc($app:contentBasePath || 'about.xml')
 
 let $eduList := $doc//tei:education
@@ -250,7 +251,7 @@ return
 };
 
 declare function app:conferences($node as node(), $model as map(*)) {
-    let $lang := request:get-parameter('lang', ())
+    let $lang := request:get-parameter('lang', 'de')
     let $conferences := doc($app:contentBasePath || 'conferences.xml')/tei:TEI
     
     let $confItems := $conferences//tei:listEvent/tei:event
@@ -278,17 +279,15 @@ declare function app:conferences($node as node(), $model as map(*)) {
 declare function app:skills($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
     let $skillsDoc := doc($app:contentBasePath || 'skills.xml')/tei:TEI
-    let $formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl')
     let $skills := $skillsDoc//tei:body/tei:div[@xml:lang=$lang]
     
     return
-        transform:transform($skills, $formatText, ())
+        transform:transform($skills, $app:formatText, ())
 };
 
 declare function app:commitment($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
     let $commitmentDoc := doc($app:contentBasePath || 'commitment.xml')/tei:TEI
-    let $formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl')
     let $commitment := $commitmentDoc//tei:listEvent/tei:event
     let $orgs := $commitmentDoc//tei:listOrg/tei:org
     
@@ -298,14 +297,14 @@ declare function app:commitment($node as node(), $model as map(*)) {
                 let $label := $project//tei:label[@xml:lang = $lang]
                 let $date := if($project//tei:date) then(shared:getDate($project//tei:date, 'full', $lang)) else()
                 return
-                   <li style="padding: 3px;">{$date} | {transform:transform($label, $formatText, ())}</li>}
+                   <li style="padding: 3px;">{$date} | {transform:transform($label, $app:formatText, ())}</li>}
         </ul>,
         <h3>{shared:translate('organisations')}</h3>,
          <ul style="list-style: square;">{for $org in $orgs
                 let $label := $org//tei:label[@xml:lang = $lang]
                 let $date := if($org//tei:date) then(shared:getDate($org//tei:date, 'full', $lang)) else()
                 return
-                   <li style="padding: 3px;">{transform:transform($label, $formatText, ())}</li>}
+                   <li style="padding: 3px;">{transform:transform($label, $app:formatText, ())}</li>}
         </ul>)
 };
 
