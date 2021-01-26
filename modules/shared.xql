@@ -21,16 +21,16 @@ import module namespace jsonp="http://www.jsonp.org";
 
 
 declare function shared:get-lang() as xs:string? {
-  let $lang := if(string-length(request:get-parameter("lang", "")) gt 0) then
+  let $lang := if(string-length(request:get-parameter("lang", "de")) gt 0) then
       (: use http parameter lang as selected language :)
-      request:get-parameter("lang", "")
+      request:get-parameter("lang", "de")
   else
      if(string-length(request:get-cookie-value("forceLang")) gt 0) then
        request:get-cookie-value("forceLang")
      else
        shared:get-browser-lang()
   (: limit to de and en; en default :)
-  return if($lang != "en" and $lang != "de") then "en" else $lang
+  return if($lang != "en" and $lang != "de") then "de" else $lang
 };
 
 
@@ -39,7 +39,7 @@ declare function shared:translate($content) {
                         attribute key {$content}
                     }
     return
-        i18n:process($content, '', '/db/apps/homepageDR/resources/lang', 'en')
+        i18n:process($content, '', '/db/apps/homepageDR/resources/lang', 'de')
 };
 
 (: Patrick integrates https://jaketrent.com/post/xquery-browser-language-detection/ :)

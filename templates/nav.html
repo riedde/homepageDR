@@ -1,21 +1,57 @@
-<nav xmlns:i18n="http://exist-db.org/xquery/i18n" data-template="i18n:translate" data-template-lang="en" data-template-catalogues="/db/apps/homepageDR/resources/lang" class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">
-            <span class="d-block d-lg-none">Dennis Ried</span>
-            <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="https://dennisried.de/resources/assets/img/profile.jpg" alt="Dennis Ried"/></span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"/></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about"><i18n:text key="about"/></a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills"><i18n:text key="skills"/></a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#commitment"><i18n:text key="commitment"/></a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education"><i18n:text key="education"/></a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience"><i18n:text key="experience"/></a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#papers"><i18n:text key="papers"/></a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#conferences"><i18n:text key="conferences"/></a></li>
-            </ul>
-        </div>
-    <ul class="navbar-nav">
-        <div data-template="app:langSwitch"/>
+<nav xmlns:i18n="http://exist-db.org/xquery/i18n" data-template="i18n:translate" data-template-lang="en"
+    data-template-catalogues="/db/apps/homepageDR/resources/lang"
+    class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Dennis Ried</span>
+        <span class="d-none d-lg-block">
+            <img class="img-fluid img-profile rounded-circle mx-auto mb-2"
+                src="http://localhost:8080/exist/apps/homepageDR/resources/assets/img/profile.jpg" alt="Dennis Ried"/>
+        </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"/>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-auto p-2">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#about">
+                    <i18n:text key="about"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#skills">
+                    <i18n:text key="skills"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#commitment">
+                    <i18n:text key="commitment"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#education">
+                    <i18n:text key="education"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#experience">
+                    <i18n:text key="experience"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#papers">
+                    <i18n:text key="papers"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#conferences">
+                    <i18n:text key="conferences"/>
+                </a>
+            </li>
+            <br/>
+            <div data-template="app:langSwitch"/>
+            
     </ul>
+    </div>
 </nav>
