@@ -46,7 +46,7 @@
     <msg key="lecturer">Dozent</msg>
     
     <!-- Cookies -->
-    <msg key="cookies.notice">Diese Seite verwendet Cookies um eine gute Performacne zu garantieren (z.B. Spracheinstellung)</msg>
+    <msg key="cookies.notice">Diese Seite verwendet Cookies(z.B. für die Spracheinstellungen), um eine gute Performance zu garantieren</msg>
     <msg key="cookies.learnMore">mehr erfahren</msg>
     <msg key="cookies.accept">verstanden</msg>
     
