@@ -254,26 +254,41 @@ declare function app:conferences($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
     let $conferences := doc($app:contentBasePath || 'conferences.xml')/tei:TEI
     
-    let $confItems := $conferences//tei:listEvent/tei:event
+    let $confTypes := distinct-values($conferences//tei:listEvent/@type/string())
+    let $confTimes := distinct-values($conferences//tei:listEvent/tei:event/@type/string())
     
-    let $confTypes := distinct-values($confItems/@type/string())
+    for $confTime in $confTimes
     
+    order by $confTime
+    
+    return
+    (<h3 class="mb-4">{shared:translate($confTime)}</h3>,
     for $confType in $confTypes
+        let $confItems := $conferences//tei:listEvent[@type=$confType]/tei:event[@type=$confTime]
         return
-            (<h3>{shared:translate($confType)}</h3>,
-             <ul  style="list-style: square;">{for $confItem in $confItems[@type=$confType]
+            for $confSubType in distinct-values($confItems/@type/string())
+             
+             return
+             (<h5 class="mb-2">{shared:translate($confType)}</h5>,
+             <ul  style="list-style: square;">
+                {for $confItem at $n in $confItems
                     let $confType := $confItem/@type/string()
                     let $label := $confItem//tei:label/text()
                     let $orgName := $confItem//tei:orgName/text()
                     let $settlement := $confItem//tei:settlement/text()
                     let $date := shared:getDate($confItem//tei:date, 'full', $lang)
+                    let $dateSort := shared:getDateSort($confItem//tei:date)
                     let $contr := $confItem//tei:desc[@type="contribution"]/text()
                     let $contrType := $confItem//tei:desc[@type="contribution"]/@subtype/string()
+                    
+                    order by $dateSort descending
+                    where $n < 8
                     return
                        <li style="padding: 3px;" type="{$confType}">
-                            {concat(if($contr) then(concat($contr, ', ', shared:translate($contrType), ': ')) else(), $label, ', ', $orgName, ', ', $settlement, ' ', $date, '.')
+                          {concat(if($contr) then(concat($contr, ', ', shared:translate($contrType), ': ')) else(), $label, ', ', $orgName, ', ', $settlement, ', ', $date, '.')
                        }</li>
              }</ul>)
+         )
 };
 
 declare function app:skills($node as node(), $model as map(*)) {
