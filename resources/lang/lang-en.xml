@@ -41,9 +41,13 @@
     <!-- Conferences -->
     <msg key="past">Past (Selection)</msg>
     <msg key="future">Future</msg>
-    <msg key="presentation">Conference talk</msg>
+    <msg key="current">Current</msg>
+    <msg key="confTalk">Conference talk</msg>
     <msg key="confPoster">Conference poster</msg>
     <msg key="lecturer">Lecturer</msg>
+    <msg key="conference">Conferences</msg>
+    <msg key="talk">Talks</msg>
+    <msg key="workshop">Workshops</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">This page uses cookies for performance reasons (e.g. language settings)</msg>
