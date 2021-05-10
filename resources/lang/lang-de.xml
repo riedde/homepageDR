@@ -22,7 +22,7 @@
     <msg key="projects">Projekte</msg>
     
     <!-- Bibl -->
-    <msg key="editedBy">Hg. von</msg>
+    <msg key="editedBy">hg. von</msg>
     <msg key="issue">Heft</msg>
     <msg key="volume">Band</msg>
     <msg key="noDate">[o. Datum]</msg>
