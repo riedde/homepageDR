@@ -1,13 +1,13 @@
-<project default="deployLocal" name="${package(abbrev)}">
+<project default="xar" name="${package(abbrev)}">
     <xmlproperty file="./expath-pkg.xml"/>
     <tstamp>
         <format property="DATETIME" pattern="yyyyMMdd-HHmm" locale="en,UK" />
     </tstamp>
-    <property name="env.EXIST_PATH" value="/opt/exist/exist-distribution-5.2.0"/>
+    <property name="env.EXIST_PATH" value="/Users/opt/exist-distribution-6.0.1"/>
     <property name="project.version" value="${package(version)}"/>
     <property name="project.app" value="${package(abbrev)}"/>
     <property name="build.dir" value="./build"/>
-    <property name="p.target.user" value="dried"/>
+    <property name="p.target.user" value="admin"/>
     <property name="p.target.pass" value=""/>
     <property name="p.target1.exist.url" value="xmldb:exist://localhost:8080/exist/xmlrpc/db/"/>
     <property name="p.target.exist.tmp" value="installer"/>

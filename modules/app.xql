@@ -24,7 +24,7 @@ declare function app:about($node as node(), $model as map(*)) {
     let $email := $person//tei:email
     let $settlement := $person//tei:settlement/text()
     let $country := $person//tei:country/@key/string()
-    let $orchid := $person//tei:idno[@type='ORCHID']/text()
+    let $orchid := $person//tei:idno[@type='ORCID']/text()
     let $text := $doc//tei:body/tei:div[@xml:lang = $lang]/tei:p/text()
     let $socialLinks := $doc//tei:person/tei:link
     return
@@ -124,7 +124,14 @@ declare function app:bibliography($node as node(), $model as map(*)) {
     let $biblTypes := distinct-values($biblItems/@type/string())
     
     for $biblType in $biblTypes
-        
+        let $sort := switch ($biblType)
+                                case 'article' return 'a'
+                                case 'review' return 'e'
+                                case 'edition' return 'd'
+                                case 'poster' return 'c'
+                                case 'termPaper' return 'z'
+                                default return $biblType
+        order by $sort ascending
         return
             (<h3>{shared:translate($biblType)}</h3>,
              <ul style="list-style: square;">{for $biblItem in $biblItems[@type=$biblType]
@@ -161,6 +168,14 @@ let $monoEditorColl := if(count($monoEditorsColl)=1)
                    then(string-join($monoEditorsColl, '/'))
                    else if (count($monoEditorsColl) > 3)
                    then(concat(string-join(subsequence($monoEditorsColl,1,2), '/'), ' et.al.'))
+                   else('[N.N.]')
+let $monoEditorsLabel := $monogr/tei:editor[@role="label"]
+let $monoEditorLabel := if(count($monoEditorsLabel)=1)
+                   then($monoEditorsLabel)
+                   else if (count($monoEditorsLabel) <= 3)
+                   then(string-join($monoEditorsLabel, '/'))
+                   else if (count($monoEditorsLabel) > 3)
+                   then(concat(string-join(subsequence($monoEditorsLabel,1,2), '/'), ' et.al.'))
                    else('[N.N.]')
 let $monoAuthors := $monogr/tei:author
 let $monoAuthor := if(count($monoAuthors)=1)
@@ -207,19 +222,23 @@ let $monogrBibl := concat(
                    if($monoAuthor)then(concat($monoAuthor, ': '))else(),
                    $monoTitle, ', ',
                    if($monoEditor)then(concat(shared:translate('editedBy'), ' ', $monoEditor, ', '))else(),
+                   if($monoEditorLabel)then(concat(shared:translate('label'), ': ', $monoEditorLabel, ', '))else(),
                    if($monoEditorColl)then(concat(' ', shared:translate('collaborator'), ' ', $monoEditorColl, ', '))else(),
                    if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
                    if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
-                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(),
+                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                    if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
                            if($inThePipe) then(concat(', ',$inThePipe))else())
-let $analyticBibl := concat($anaAuthor, ': ', $anaTitle, ', in: ', $monogrBibl, if($monoScopePages)then(concat(', ', shared:translate('page'), ' ', $monoScopePages))else(),
-                           if($inThePipe) then(concat(', ',$inThePipe))else())
+let $analyticBibl := concat($anaAuthor, ': ',
+                            $anaTitle, ', in: ',
+                            $monogrBibl,
+                            if($monoScopePages)then(concat(', ', shared:translate('page'), ' ', $monoScopePages))else()
+                           )
 let $seriesBibl := concat($seriesTitle, ', ', shared:translate('editedBy'),' ',$seriesEditor, ', ', shared:translate('section'),' ', $seriesSection, ' ', $seriesTitleSec, ', ')
 
-let $posterBibl := concat($anaTitle, ', ', $monoPublisher, if($monoPubPlace) then(concat(', ', $monoPubPlace, ' ')) else(shared:translate('noPlace')), if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
+let $posterBibl := concat($anaTitle, ', ', $monoPublisher, if($monoPubPlace) then(concat(', ', $monoPubPlace, ' ')) else(shared:translate('noPlace')),' ', if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
 let $termPaperBibl := concat($monoTitle, ', ',
-                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(),
+                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                    if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
 let $editionBibl := concat(
                            if($monoAuthor)then(concat($monoAuthor, ': '))else(),
@@ -229,9 +248,10 @@ let $editionBibl := concat(
                            if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
                            if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
                            if($seriesBibl) then(concat($seriesBibl, ' ')) else(),
-                           if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(),
+                           if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                            if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
-                           if($inThePipe) then(concat(', ',$inThePipe))else())
+                           if($inThePipe) then(concat(', ',$inThePipe))else()
+                          )
 
 let $monoRef := $monogr//tei:ref/@target
 let $anaRef := $analytic//tei:ref/@target
@@ -250,29 +270,47 @@ return
     else()
 };
 
+declare function app:getDate($date as node()) as xs:date {
+    let $dateIso := $date/@when
+    let $dateCustom := $date/@when-custom | $date/@to-custom
+    
+    return
+    xs:date(
+            if ($dateIso)
+            then($dateIso)
+            else if($dateCustom)
+            then(
+                 if(string-length($dateCustom) = 4)
+                 then($dateCustom || '-01-01')
+                 else if(string-length($dateCustom) = 7)
+                 then($dateCustom || '-01')
+                 else($dateCustom)
+                 )
+            else('0001-01-01')
+           )
+};
+
 declare function app:conferences($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
     let $conferences := doc($app:contentBasePath || 'conferences.xml')/tei:TEI
     
     let $confTypes := distinct-values($conferences//tei:listEvent/@type/string())
-    let $confTimes := distinct-values($conferences//tei:listEvent/tei:event/@type/string())
     
-    for $confTime in $confTimes
+    for $confTime in ('future', 'past')
     
     order by $confTime
     
     return
     (<h3 class="mb-4">{shared:translate($confTime)}</h3>,
     for $confType in $confTypes
-        let $confItems := $conferences//tei:listEvent[@type=$confType]/tei:event[@type=$confTime]
+        let $dateToday := xs:date(current-date() => substring(1,10))
+        let $confItems := if($confTime = 'future')
+                          then($conferences//tei:listEvent[@type=$confType]/tei:event[app:getDate(.//tei:date) > $dateToday])
+                          else($conferences//tei:listEvent[@type=$confType]/tei:event[app:getDate(.//tei:date) < $dateToday])
         return
-            for $confSubType in distinct-values($confItems/@type/string())
-             
-             return
              (<h5 class="mb-2">{shared:translate($confType)}</h5>,
              <ul  style="list-style: square;">
                 {for $confItem at $n in $confItems
-                    let $confType := $confItem/@type/string()
                     let $label := $confItem//tei:label/text()
                     let $orgName := $confItem//tei:orgName/text()
                     let $settlement := $confItem//tei:settlement/text()
@@ -285,7 +323,7 @@ declare function app:conferences($node as node(), $model as map(*)) {
                     where $n < 8
                     return
                        <li style="padding: 3px;" type="{$confType}">
-                          {concat(if($contr) then(concat($contr, ', ', shared:translate($contrType), ': ')) else(), $label, ', ', $orgName, ', ', $settlement, ', ', $date, '.')
+                          {concat(if($contr) then(concat($contr, if($contrType)then(', ' || shared:translate($contrType))else(), ': ')) else(), $label, ', ', $orgName, ', ', $settlement, ', ', $date, '.')
                        }</li>
              }</ul>)
          )

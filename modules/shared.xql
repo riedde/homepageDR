@@ -96,7 +96,7 @@ declare function shared:getDate($date as node(), $param as xs:string, $lang as x
 
   let $dateFrom := $date/@from-custom/string()
   let $dateTo := $date/@to-custom/string()
-  let $dateWhen := $date/@when-custom/string()
+  let $dateWhen := if($date/@when-custom) then($date/@when-custom/string()) else($date/@when/string())
   
   let $dateFromFormatted := if(string-length($dateFrom) = 4)
                             then($dateFrom)

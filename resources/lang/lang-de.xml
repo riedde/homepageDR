@@ -22,11 +22,12 @@
     <msg key="projects">Projekte</msg>
     
     <!-- Bibl -->
-    <msg key="editedBy">hg. von</msg>
+    <msg key="editedBy">hg.&#160;von</msg>
+    <msg key="label">Label</msg>
     <msg key="issue">Heft</msg>
     <msg key="volume">Band</msg>
-    <msg key="noDate">[o. Datum]</msg>
-    <msg key="noPlace">[o. Ort]</msg>
+    <msg key="noDate">[o.&#160;Datum]</msg>
+    <msg key="noPlace">[o.&#160;Ort]</msg>
     <msg key="page">S.</msg>
     <msg key="section">Abt.</msg>
     <msg key="article">Artikel</msg>
@@ -35,23 +36,25 @@
     <msg key="book">Bücher</msg>
     <msg key="review">Rezensionen</msg>
     <msg key="edition">Editionen</msg>
-    <msg key="inThePipe">[in Vorbereitung]</msg>
+    <msg key="booklet">Booklet-Texte</msg>
+    <msg key="inThePipe">[in&#160;Vorbereitung]</msg>
     <msg key="collaboration">unter Mitarbeit von</msg>
+    
     
     <!-- Conferences -->
     <msg key="past">Vergangene (Auswahl)</msg>
     <msg key="future">Zukünftige</msg>
     <msg key="current">Aktuell</msg>
-    <msg key="confTalk">Vortrag zur Konferenz</msg>
-    <msg key="confPoster">Poster zur Konferenz</msg>
+    <msg key="confTalk">Vortrag zur&#160;Konferenz</msg>
+    <msg key="confPoster">Poster zur&#160;Konferenz</msg>
     <msg key="lecturer">Dozent</msg>
-    <msg key="conference">Konferenzen</msg>
-    <msg key="talk">Vorträge</msg>
+    <msg key="conference">Konferenzen/Vorträge</msg>
+    <msg key="talk">Vortrag</msg>
     <msg key="workshop">Workshops</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">Diese Seite verwendet Cookies(z.B. für die Spracheinstellungen), um eine gute Performance zu garantieren</msg>
-    <msg key="cookies.learnMore">mehr erfahren</msg>
+    <msg key="cookies.learnMore">mehr&#160;erfahren</msg>
     <msg key="cookies.accept">verstanden</msg>
     
 </catalogue>
