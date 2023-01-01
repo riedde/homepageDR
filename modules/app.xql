@@ -345,14 +345,14 @@ declare function app:conferences($node as node(), $model as map(*)) {
         (<h3 class="mb-4">{shared:translate('future')}</h3>,
          <h5 class="mb-2">{shared:translate('conference')}</h5>,
          <ul  style="list-style: square;">
-            {if($events[@type='conference'])
+            {if(app:getEventsCount($events[@type='conference'], 'future'))
              then(app:getEvents($events[@type='conference'], 'future', '', $lang, (), ()))
              else(<i>{shared:translate('currentNo')}</i>)}
          </ul>,
          <h5 class="mb-2">{shared:translate('talks')}</h5>,
          <ul  style="list-style: square;">
-            {if($events[@type='conference'][.//desc[@type='contribution']])
-             then(app:getEvents($events[@type='conference'][.//desc[@type='contribution']], 'future', 'contribution', $lang, (), ()))
+            {if(app:getEventsCount($events[@type='conference'][.//desc[@type='contribution']], 'future'))
+             then(app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'future', 'contribution', $lang, 1, 100))
              else(<i>{shared:translate('currentNo')}</i>)}
          </ul>,
          <h3 class="mb-4">{shared:translate('past')}</h3>,
