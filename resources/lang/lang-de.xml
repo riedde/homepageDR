@@ -1,5 +1,5 @@
 <catalogue xml:lang="de">
-
+    
     <!-- Nav -->
     <msg key="about">Über mich</msg>
     <msg key="experience">Berufserfahrung</msg>
@@ -43,7 +43,7 @@
     
     <!-- Conferences -->
     <msg key="past">Vergangene (Auswahl)</msg>
-    <msg key="future">Zukünftige</msg>
+    <msg key="future">Anstehende</msg>
     <msg key="current">Aktuell</msg>
     <msg key="confTalk">Vortrag zur&#160;Konferenz</msg>
     <msg key="confPoster">Poster zur&#160;Konferenz</msg>
@@ -51,10 +51,14 @@
     <msg key="conference">Konferenzen/Vorträge</msg>
     <msg key="talk">Vortrag</msg>
     <msg key="workshop">Workshops</msg>
+    <msg key="training">Fortbildung</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">Diese Seite verwendet Cookies(z.B. für die Spracheinstellungen), um eine gute Performance zu garantieren</msg>
     <msg key="cookies.learnMore">mehr&#160;erfahren</msg>
     <msg key="cookies.accept">verstanden</msg>
+    
+    <!-- General -->
+    <msg key="moreItems">Weitere Einträge</msg>
     
 </catalogue>

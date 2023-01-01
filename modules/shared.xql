@@ -132,12 +132,28 @@ declare function shared:getDate($date as node(), $param as xs:string, $lang as x
 
 declare function shared:getDateSort($date as node()) {
 
+  let $dateWhen := $date/@when-custom/string()
   let $dateFrom := $date/@from-custom/string()
   let $dateTo := $date/@to-custom/string()
-  let $dateWhen := $date/@when-custom/string()
   
   return
     if($dateWhen)
     then($dateWhen)
-    else($dateFrom)
+    else if($dateFrom)
+    then($dateFrom)
+    else($dateTo)
+};
+
+declare function shared:isFutureDate($date as node()) {
+    let $dateAsString := shared:getDateSort($date)
+    let $dateFull := if(string-length($dateAsString) = 4)
+                      then($dateAsString || '-01-01')
+                      else if(string-length($dateAsString) = 7)
+                      then($dateAsString || '-01')
+                      else($dateAsString)
+    
+    let $current-date := current-date()
+    let $isFutureDate := xs:date($dateFull)
+    return
+        $current-date - $isFutureDate || $dateFull
 };
