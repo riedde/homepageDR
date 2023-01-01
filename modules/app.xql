@@ -293,26 +293,6 @@ return
     else()
 };
 
-declare function app:getDate($date as node()) as xs:date {
-    let $dateIso := $date/@when
-    let $dateCustom := $date/@when-custom | $date/@to-custom
-    
-    return
-    xs:date(
-            if ($dateIso)
-            then($dateIso)
-            else if($dateCustom)
-            then(
-                 if(string-length($dateCustom) = 4)
-                 then($dateCustom || '-01-01')
-                 else if(string-length($dateCustom) = 7)
-                 then($dateCustom || '-01')
-                 else($dateCustom)
-                 )
-            else('0001-01-01')
-           )
-};
-
 declare function app:conferences($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
     let $events := collection($app:contentBasePath)//tei:event
@@ -328,7 +308,7 @@ declare function app:conferences($node as node(), $model as map(*)) {
                     let $label := $event//tei:label//text() => string-join(' ')
                     let $orgName := $event//tei:orgName/text()
                     let $settlement := $event//tei:settlement/text()
-                    let $date := shared:getDate($event//tei:date[1], 'full', $lang)
+                    let $date := shared:getDate($event//tei:date, 'full', $lang)
                     let $dateSort := shared:getDateSort($event//tei:date[1])
                     let $dateFuture := shared:isFutureDate($event//tei:date[1])
                     let $contr := $event//tei:desc[@type="contribution"][@xml:lang=$lang]/text()
@@ -352,8 +332,8 @@ declare function app:conferences($node as node(), $model as map(*)) {
                     let $label := $event//tei:label//text() => string-join(' ')
                     let $orgName := $event//tei:orgName/text()
                     let $settlement := $event//tei:settlement/text()
-                    let $date := shared:getDate($event//tei:date[1], 'full', $lang)
-                    let $dateSort := shared:getDateSort($event//tei:date[1])
+                    let $date := shared:getDate($event//tei:date, 'full', $lang)
+                    let $dateSort := shared:getDateSort($event//tei:date)
                     let $contr := $event//tei:desc[@type="contribution"][@xml:lang=$lang]/text()
                     let $contrType := $event//tei:desc[@type="contribution"][@xml:lang=$lang]/@subtype/string()
                     
