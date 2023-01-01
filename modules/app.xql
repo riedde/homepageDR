@@ -293,59 +293,90 @@ return
     else()
 };
 
+declare function app:getEvents($events as node()*, $param1 as xs:string?, $param2 as xs:string, $lang as xs:string, $from as xs:integer?, $to as xs:integer?) {
+    for $event at $n in $events
+        let $eventType := $event/@type
+        let $label := $event//tei:label//text() => string-join(' ')
+        let $orgName := $event//tei:orgName/text()
+        let $settlement := $event//tei:settlement/text()
+        let $date := shared:getDate($event//tei:date, 'full', $lang)
+        let $dateFuture := shared:isFutureDate($event//tei:date)
+        let $dateSort := shared:getDateSort($event//tei:date)
+        let $contr := $event//tei:desc[@type="contribution"][if(@xml:lang)then(@xml:lang=$lang)else(true())]/text()
+        let $contrType := $event//tei:desc[@type="contribution"][if(@xml:lang)then(@xml:lang=$lang)else(true())]/@subtype/string()
+        let $from := if($from)then($from)else(1)
+        let $to := if($to)then($to)else(count($events))
+        
+        let $conferenceName := string-join(($label, $orgName, $settlement, $date), ', ') || '.'
+        
+        where if ($param1 = 'future')
+              then( shared:isFutureDate($event//tei:date))
+              else(not(shared:isFutureDate($event//tei:date)))
+        where $n >= $from
+        where $n <= $to
+        order by $dateSort descending
+    
+        return
+            if($param2 = 'contribution')
+            then(<li style="padding: 3px;" type="{$eventType}">
+                    {$contr || ', ' || shared:translate($contrType) || ': ' || $conferenceName}
+                 </li>)
+            else(<li style="padding: 3px;" type="{$eventType}">
+                    {$conferenceName}
+                 </li>)
+};
+
+declare function app:getEventsCount($events as node()*, $param as xs:string) {
+    let $futureEvents := for $event at $n in $events
+                            let $eventType := $event/@type
+                            let $dateFuture := shared:isFutureDate($event//tei:date)
+                            where $dateFuture
+                            return
+                                $event
+    return
+        count($futureEvents)
+};
+
 declare function app:conferences($node as node(), $model as map(*)) {
     let $lang := request:get-parameter('lang', 'de')
     let $events := collection($app:contentBasePath)//tei:event
-    let $eventTypes := distinct-values($events/@type)
     
     return
-    (<h3 class="mb-4">{shared:translate('future')}</h3>,
-    for $eventType in $eventTypes
-        return
-            (<h5 class="mb-2">{shared:translate($eventType)}</h5>,
-              <ul  style="list-style: square;">
-                {for $event at $n in $events[@type=$eventType]
-                    let $label := $event//tei:label//text() => string-join(' ')
-                    let $orgName := $event//tei:orgName/text()
-                    let $settlement := $event//tei:settlement/text()
-                    let $date := shared:getDate($event//tei:date, 'full', $lang)
-                    let $dateSort := shared:getDateSort($event//tei:date[1])
-                    let $dateFuture := shared:isFutureDate($event//tei:date[1])
-                    let $contr := $event//tei:desc[@type="contribution"][@xml:lang=$lang]/text()
-                    let $contrType := $event//tei:desc[@type="contribution"][@xml:lang=$lang]/@subtype/string()
-                    
-                    order by $dateSort descending
-                    return
-                        (<li>{$dateFuture}</li>,
-                       <li style="padding: 3px;" type="{$eventType}">
-                          {if($contr) then($contr || ', ' || shared:translate($contrType) || ': ') else() ||
-                          $label || ', ' || $orgName || ', ' || $settlement || ', ' || $date || '.'
-                       }</li>)
-             }</ul>)
-    ,
-    <h3 class="mb-4">{shared:translate('past')}</h3>,
-    for $eventType in $eventTypes
-        return
-            (<h5 class="mb-2">{shared:translate($eventType)}</h5>,
-              <ul  style="list-style: square;">
-                {for $event at $n in $events[@type=$eventType]
-                    let $label := $event//tei:label//text() => string-join(' ')
-                    let $orgName := $event//tei:orgName/text()
-                    let $settlement := $event//tei:settlement/text()
-                    let $date := shared:getDate($event//tei:date, 'full', $lang)
-                    let $dateSort := shared:getDateSort($event//tei:date)
-                    let $contr := $event//tei:desc[@type="contribution"][@xml:lang=$lang]/text()
-                    let $contrType := $event//tei:desc[@type="contribution"][@xml:lang=$lang]/@subtype/string()
-                    
-                    order by $dateSort descending
-                    where $n < 5
-                    return
-                       <li style="padding: 3px;" type="{$eventType}">
-                          {if($contr) then($contr || ', ' || shared:translate($contrType) || ': ') else() ||
-                          $label || ', ' || $orgName || ', ' || $settlement || ', ' || $date || '.'
-                       }</li>
-             }</ul>)
-    )
+        (<h3 class="mb-4">{shared:translate('future')}</h3>,
+         <h5 class="mb-2">{shared:translate('conference')}</h5>,
+         <ul  style="list-style: square;">
+            {if($events[@type='conference'])
+             then(app:getEvents($events[@type='conference'], 'future', '', $lang, (), ()))
+             else(<i>{shared:translate('currentNo')}</i>)}
+         </ul>,
+         <h5 class="mb-2">{shared:translate('talks')}</h5>,
+         <ul  style="list-style: square;">
+            {if($events[@type='conference'][.//desc[@type='contribution']])
+             then(app:getEvents($events[@type='conference'][.//desc[@type='contribution']], 'future', 'contribution', $lang, (), ()))
+             else(<i>{shared:translate('currentNo')}</i>)}
+         </ul>,
+         <h3 class="mb-4">{shared:translate('past')}</h3>,
+         <h5 class="mb-2">{shared:translate('conference')}</h5>,
+         <ul  style="list-style: square;">
+              {app:getEvents($events[@type='conference'], 'past', '', $lang, 1, 5)}
+         </ul>,
+         <ul style="list-style: none">
+            <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#biblReadMore-conference" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
+         </ul>,
+         <ul class="collapse" id="biblReadMore-conference" style="list-style: square;">
+            {app:getEvents($events[@type='conference'], 'past', '', $lang, 5, ())}
+         </ul>,
+         <h5 class="mb-2">{shared:translate('contributions')}</h5>,
+         <ul  style="list-style: square;">
+              {app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'past', 'contribution', $lang, 1, 5)}
+         </ul>,
+         <ul style="list-style: none">
+            <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#biblReadMore-talks" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
+         </ul>,
+         <ul class="collapse" id="biblReadMore-talks" style="list-style: square;">
+            {app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'past', 'contribution', $lang, 5, ())}
+         </ul>
+        )
 };
 
 declare function app:skills($node as node(), $model as map(*)) {

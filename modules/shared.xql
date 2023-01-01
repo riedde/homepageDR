@@ -155,5 +155,5 @@ declare function shared:isFutureDate($date as node()) {
     let $current-date := current-date()
     let $isFutureDate := xs:date($dateFull)
     return
-        $current-date - $isFutureDate || $dateFull
+        starts-with(($current-date - $isFutureDate),'-')
 };
