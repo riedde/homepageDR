@@ -116,6 +116,17 @@ return
         </div>
 };
 
+declare function app:getBiblListItems($biblItems as node()*) as node()* {
+    for $biblItem in $biblItems
+      let $biblType := $biblItem/@type/string()
+      let $date := $biblItem//tei:imprint/tei:date
+      let $titleAna := $biblItem//tei:analytic//tei:title[1]/text()
+      let $titleMono := $biblItem//tei:monogr//tei:title[1]/text()
+      order by shared:getDateSort($date) descending, $titleAna ascending
+      return
+        <li style="padding: 3px;">{app:styleBibl($biblItem, $biblType)}</li>
+};
+
 declare function app:bibliography($node as node(), $model as map(*)) {
     let $biblItems := collection($app:contentBasePath)//tei:biblStruct
     let $biblTypes := distinct-values($biblItems/@type/string())
@@ -135,15 +146,10 @@ declare function app:bibliography($node as node(), $model as map(*)) {
         return
            (<h3>{shared:translate($biblType)}</h3>,
             <ul style="list-style: square;">
-                {for $biblItem  at $n in $biblItems
-                  where $n <= 4
-                  let $biblType := $biblItem/@type/string()
-                  let $date := $biblItem//tei:imprint/tei:date/@when-custom/string()
-                  let $titleAna := $biblItem//tei:analytic//tei:title[1]/text()
-                  let $titleMono := $biblItem//tei:monogr//tei:title[1]/text()
-                  order by $date descending, $titleAna ascending
-                  return
-                    <li style="padding: 3px;">{app:styleBibl($biblItem, $biblType)}</li>}
+                {for $biblItem at $i in app:getBiblListItems($biblItems)
+                    where $i <= 4
+                    return
+                        $biblItem}
             </ul>,
             if(count($biblItems) gt 4)
             then(
@@ -151,17 +157,10 @@ declare function app:bibliography($node as node(), $model as map(*)) {
                     <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#biblReadMore-{$i}" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
                 </ul>,
                 <ul class="collapse" id="biblReadMore-{$i}" style="list-style: square;">
-                    {for $biblItem at $n in $biblItems
-                      where $n gt 4
-                      let $biblType := $biblItem/@type/string()
-                      let $date := $biblItem//tei:imprint/tei:date/@when-custom/string()
-                      let $titleAna := $biblItem//tei:analytic//tei:title[1]/text()
-                      let $titleMono := $biblItem//tei:monogr//tei:title[1]/text()
-                      order by $date descending, $titleAna ascending
-                      return
-                        <li style="padding: 3px;">{app:styleBibl($biblItem, $biblType)}</li>
-                        
-                    }
+                    {for $biblItem at $i in app:getBiblListItems($biblItems)
+                        where $i gt 4
+                        return
+                            $biblItem}
                 </ul>
                 )
             else()
@@ -293,10 +292,10 @@ return
     else()
 };
 
-declare function app:getEvents($events as node()*, $param1 as xs:string?, $param2 as xs:string, $lang as xs:string, $from as xs:integer?, $to as xs:integer?) {
+declare function app:getEvents($events as node()*, $param1 as xs:string?, $param2 as xs:string, $lang as xs:string) {
     for $event at $n in $events
         let $eventType := $event/@type
-        let $label := $event//tei:label//text() => string-join(' ')
+        let $label := $event//tei:label[if(@xml:lang)then(@xml:lang=$lang)else(true())]//text() => string-join(' ')
         let $orgName := $event//tei:orgName/text()
         let $settlement := $event//tei:settlement/text()
         let $date := shared:getDate($event//tei:date, 'full', $lang)
@@ -304,16 +303,12 @@ declare function app:getEvents($events as node()*, $param1 as xs:string?, $param
         let $dateSort := shared:getDateSort($event//tei:date)
         let $contr := $event//tei:desc[@type="contribution"][if(@xml:lang)then(@xml:lang=$lang)else(true())]/text()
         let $contrType := $event//tei:desc[@type="contribution"][if(@xml:lang)then(@xml:lang=$lang)else(true())]/@subtype/string()
-        let $from := if($from)then($from)else(1)
-        let $to := if($to)then($to)else(count($events))
         
         let $conferenceName := string-join(($label, $orgName, $settlement, $date), ', ') || '.'
         
         where if ($param1 = 'future')
               then( shared:isFutureDate($event//tei:date))
               else(not(shared:isFutureDate($event//tei:date)))
-        where $n >= $from
-        where $n <= $to
         order by $dateSort descending
     
         return
@@ -327,14 +322,14 @@ declare function app:getEvents($events as node()*, $param1 as xs:string?, $param
 };
 
 declare function app:getEventsCount($events as node()*, $param as xs:string) {
-    let $futureEvents := for $event at $n in $events
-                            let $eventType := $event/@type
-                            let $dateFuture := shared:isFutureDate($event//tei:date)
-                            where $dateFuture
-                            return
-                                $event
+    let $events := for $event at $n in $events
+        let $eventType := $event/@type
+        let $dateFuture := shared:isFutureDate($event//tei:date)
+        where if($param = 'future') then($dateFuture) else($eventType)
+        return
+            $event
     return
-        count($futureEvents)
+        count($events)
 };
 
 declare function app:conferences($node as node(), $model as map(*)) {
@@ -346,35 +341,47 @@ declare function app:conferences($node as node(), $model as map(*)) {
          <h5 class="mb-2">{shared:translate('conference')}</h5>,
          <ul  style="list-style: square;">
             {if(app:getEventsCount($events[@type='conference'], 'future'))
-             then(app:getEvents($events[@type='conference'], 'future', '', $lang, (), ()))
+             then(app:getEvents($events[@type='conference'], 'future', '', $lang))
              else(<i>{shared:translate('currentNo')}</i>)}
          </ul>,
          <h5 class="mb-2">{shared:translate('talks')}</h5>,
          <ul  style="list-style: square;">
             {if(app:getEventsCount($events[@type='conference'][.//desc[@type='contribution']], 'future'))
-             then(app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'future', 'contribution', $lang, 1, 100))
+             then(app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'future', 'contribution', $lang))
              else(<i>{shared:translate('currentNo')}</i>)}
          </ul>,
          <h3 class="mb-4">{shared:translate('past')}</h3>,
          <h5 class="mb-2">{shared:translate('conference')}</h5>,
          <ul  style="list-style: square;">
-              {app:getEvents($events[@type='conference'], 'past', '', $lang, 1, 5)}
+          {for $event at $i in app:getEvents($events[@type='conference'], 'past', '', $lang)
+                    where $i <= 4
+                    return
+                        $event}
          </ul>,
          <ul style="list-style: none">
-            <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#biblReadMore-conference" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
+            <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#eventReadMore-conference" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
          </ul>,
-         <ul class="collapse" id="biblReadMore-conference" style="list-style: square;">
-            {app:getEvents($events[@type='conference'], 'past', '', $lang, 5, ())}
+         <ul class="collapse" id="eventReadMore-conference" style="list-style: square;">
+                      {for $event at $i in app:getEvents($events[@type='conference'], 'past', '', $lang)
+                    where $i gt 4
+                    return
+                        $event}
          </ul>,
          <h5 class="mb-2">{shared:translate('contributions')}</h5>,
          <ul  style="list-style: square;">
-              {app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'past', 'contribution', $lang, 1, 5)}
+            {for $event at $i in app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'past', 'contribution', $lang)
+                where $i <= 4
+                return
+                    $event}
          </ul>,
          <ul style="list-style: none">
-            <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#biblReadMore-talks" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
+            <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#eventReadMore-talks" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
          </ul>,
-         <ul class="collapse" id="biblReadMore-talks" style="list-style: square;">
-            {app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'past', 'contribution', $lang, 5, ())}
+         <ul class="collapse" id="eventReadMore-talks" style="list-style: square;">
+            {for $event at $i in app:getEvents($events[@type='conference'][.//tei:desc[@type='contribution']], 'past', 'contribution', $lang)
+                where $i gt 4
+                return
+                    $event}
          </ul>
         )
 };
@@ -398,6 +405,7 @@ declare function app:commitment($node as node(), $model as map(*)) {
          <ul style="list-style: square;">{for $project in $commitments
                 let $label := $project//tei:label[@xml:lang = $lang]
                 let $date := if($project//tei:date) then(shared:getDate($project//tei:date, 'full', $lang)) else()
+                order by shared:getDateSort($project//tei:date) descending
                 return
                    <li style="padding: 3px;">{$date} | {transform:transform($label, $app:formatText, ())}</li>}
         </ul>,
@@ -405,6 +413,7 @@ declare function app:commitment($node as node(), $model as map(*)) {
          <ul style="list-style: square;">{for $org in $orgs
                 let $label := $org//tei:label[@xml:lang = $lang]
                 let $date := if($org//tei:date) then(shared:getDate($org//tei:date, 'full', $lang)) else()
+                order by $label
                 return
                    <li style="padding: 3px;">{transform:transform($label, $app:formatText, ())}</li>}
         </ul>)
