@@ -48,6 +48,7 @@
     <msg key="current">Aktuell</msg>
     <msg key="currentNo">Derzeit keine in Planung</msg>
     <msg key="confTalk">Vortrag zur Konferenz</msg>
+    <msg key="panel">Panel zur Konferenz</msg>
     <msg key="confPoster">Poster zur Konferenz</msg>
     <msg key="lecturer">Dozent</msg>
     <msg key="conference">Konferenzen</msg>

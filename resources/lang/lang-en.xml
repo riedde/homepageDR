@@ -47,6 +47,7 @@
     <msg key="current">Current</msg>
     <msg key="currentNo">Currently none in planning</msg>
     <msg key="confTalk">Conference talk</msg>
+    <msg key="panel">Conference panel</msg>
     <msg key="confPoster">Conference poster</msg>
     <msg key="lecturer">Lecturer</msg>
     <msg key="conference">Conferences</msg>
