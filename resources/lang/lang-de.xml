@@ -56,6 +56,9 @@
     <msg key="talk">Vortrag</msg>
     <msg key="workshop">Workshops</msg>
     <msg key="training">Fortbildung</msg>
+    <msg key="qualification">Qualifikationsschriften</msg>
+    <msg key="software">Software</msg>
+    <msg key="dataPub">Datenpublikation</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">Diese Seite verwendet Cookies(z.B. für die Spracheinstellungen), um eine gute Performance zu garantieren</msg>
@@ -64,5 +67,4 @@
     
     <!-- General -->
     <msg key="moreItems">Weitere Einträge</msg>
-    
 </catalogue>

@@ -55,6 +55,9 @@
     <msg key="talk">Talk</msg>
     <msg key="workshop">Workshops</msg>
     <msg key="training">Training</msg>
+    <msg key="qualification">Academic Qualification</msg>
+    <msg key="software">Software</msg>
+    <msg key="dataPub">Data Publication</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">This page uses cookies for performance reasons (e.g. language settings)</msg>
