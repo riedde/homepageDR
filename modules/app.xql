@@ -181,7 +181,9 @@ declare function app:joinNames($names as node()*) as xs:string? {
 
 
 declare function app:styleBibl($biblItem as node(), $biblType as xs:string) {
-let $inThePipe := if($biblItem[@status="inThePipe"]) then(shared:translate('inThePipe')) else()
+let $pubStatus := if($biblItem[@status="inThePipe"]) then(shared:translate('inThePipe'))
+                  else if($biblItem[@status="unPub"]) then(shared:translate('unpublished'))
+                  else()
 
 let $analytic := $biblItem/tei:analytic
 let $monogr := $biblItem/tei:monogr
@@ -227,7 +229,7 @@ let $monogrBibl := concat(
                        if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                        if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
                        if($monoRef) then('DOI: ' || $monoRef) else(),
-                       if($inThePipe) then(concat(', ',$inThePipe))else()
+                       if($pubStatus) then(concat(', ',$pubStatus))else()
                    )
 let $analyticBibl := concat($anaAuthor, ': ',
                             $anaTitle, ', in: ',
@@ -251,7 +253,7 @@ let $editionBibl := concat(
                            if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                            if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
                            if($monoRef) then(', DOI: ' || $monoRef) else(),
-                           if($inThePipe) then(concat(', ',$inThePipe))else()
+                           if($pubStatus) then(concat(', ',$pubStatus))else()
                           )
 
 return
