@@ -67,4 +67,5 @@
     
     <!-- General -->
     <msg key="moreItems">Weitere Einträge</msg>
+    <msg key="unpublished">nicht publiziert</msg>
 </catalogue>

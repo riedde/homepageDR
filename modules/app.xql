@@ -182,7 +182,7 @@ declare function app:joinNames($names as node()*) as xs:string? {
 
 declare function app:styleBibl($biblItem as node(), $biblType as xs:string) {
 let $pubStatus := if($biblItem[@status="inThePipe"]) then(shared:translate('inThePipe'))
-                  else if($biblItem[@status="unPub"]) then(shared:translate('unpublished'))
+                  else if($biblItem[@status="unpublished"]) then(shared:translate('unpublished'))
                   else()
 
 let $analytic := $biblItem/tei:analytic
@@ -226,7 +226,7 @@ let $monogrBibl := concat(
                        if($monoEditorColl)then(concat(' ', shared:translate('collaborator'), ' ', $monoEditorColl, ', '))else(),
                        if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
                        if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
-                       if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
+                       if($monoPubPlace and not($biblItem[@status="unpublished"])) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                        if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
                        if($monoRef) then('DOI: ' || $monoRef) else(),
                        if($pubStatus) then(concat(', ',$pubStatus))else()
@@ -238,9 +238,12 @@ let $analyticBibl := concat($anaAuthor, ': ',
                            )
 let $seriesBibl := concat($seriesTitle, ', ', shared:translate('editedBy'),' ',$seriesEditor, ', ', shared:translate('section'),' ', $seriesSection, ' ', $seriesTitleSec, ', ')
 
-let $posterBibl := concat($anaTitle, ', ', $monoPublisher, if($monoPubPlace) then(concat(', ', $monoPubPlace, ' ')) else(shared:translate('noPlace')),' ', if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
+let $posterBibl := concat($anaTitle, ', ', $monoPublisher, if($monoPubPlace) then(concat(', ', $monoPubPlace, ' ')) else if($biblItem[@status="unpublished"]) then() else(shared:translate('noPlace')),' ', if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
 let $termPaperBibl := concat($monoTitle, ', ',
-                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
+                   if($monoPubPlace) then(concat($monoPubPlace, ' '))
+                   else if($biblItem[@status="unpublished"])
+                   then()
+                   else(shared:translate('noPlace')),' ',
                    if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')))
 let $editionBibl := concat(
                            if($monoAuthor)then(concat($monoAuthor, ': '))else(),
@@ -250,7 +253,10 @@ let $editionBibl := concat(
                            if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
                            if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
                            if($seriesTitle) then(concat($seriesBibl, ' ')) else(),
-                           if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
+                           if($monoPubPlace) then(concat($monoPubPlace, ' '))
+                           else if($biblItem[@status="unpublished"])
+                           then()
+                           else(shared:translate('noPlace')),' ',
                            if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
                            if($monoRef) then(', DOI: ' || $monoRef) else(),
                            if($pubStatus) then(concat(', ',$pubStatus))else()
