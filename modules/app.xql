@@ -14,6 +14,7 @@ declare namespace mei = "http://www.music-encoding.org/ns/mei";
 declare variable $app:contentBasePath := '/db/apps/homepageDRContent/data/';
 declare variable $app:formatText := doc('/db/apps/homepageDR/resources/xslt/formattingText.xsl');
 
+
 declare function app:about($node as node(), $model as map(*)) {
     let $lang := request:get-parameter("lang", 'de')
     let $doc := doc($app:contentBasePath || 'about.xml')/tei:TEI
@@ -122,7 +123,7 @@ declare function app:bibliography($node as node(), $model as map(*)) {
     
     for $biblType at $i in $biblTypes
         let $biblTypeSort := switch ($biblType)
-                                case 'monography' return '01'
+                                case 'qualification' return '01'
                                 case 'article' return '02'
                                 case 'edition' return '03'
                                 case 'software' return '04'
@@ -141,22 +142,22 @@ declare function app:bibliography($node as node(), $model as map(*)) {
                                 <li style="padding: 3px;" id="{$biblItem/root()/node()/@xml:id}">{app:styleBibl($biblItem, $biblType)}</li>
         order by $biblTypeSort
         return
-           (<h3>{shared:translate($biblType)}</h3>,
+           (<h3>{shared:translate($biblType)} ({count($biblItems)})</h3>,
             <ul style="list-style: square;">
                 {for $biblItem at $n in $biblItems
-                    where $n lt 5
+                    where $n lt 6
                     return
                         $biblItem
                 }
             </ul>,
-            if(count($biblItems) gt 4)
+            if(count($biblItems) gt 5)
             then(
                 <ul style="list-style: none">
                     <li class="btn btn-primary" type="button" data-toggle="collapse" data-target="#biblReadMore-{$i}" aria-expanded="false" aria-controls="collapseExample">{shared:translate('moreItems')}</li>
                 </ul>,
                 <ul class="collapse" id="biblReadMore-{$i}" style="list-style: square;">
                     {for $biblItem at $n in $biblItems
-                    where $n gt 4
+                    where $n gt 5
                     return
                         $biblItem
                 }
@@ -166,6 +167,19 @@ declare function app:bibliography($node as node(), $model as map(*)) {
            )
 };
 
+declare function app:joinNames($names as node()*) as xs:string? {
+    if(count($names)=1)
+    then($names)
+    else if (count($names) <= 3)
+    then(string-join($names, ' / '))
+    else if (count($names) > 3)
+    then(concat(string-join(subsequence($names,1,2), ' / '), ' et.al.'))
+    else('[N.N.]')
+
+};
+
+
+
 declare function app:styleBibl($biblItem as node(), $biblType as xs:string) {
 let $inThePipe := if($biblItem[@status="inThePipe"]) then(shared:translate('inThePipe')) else()
 
@@ -174,38 +188,10 @@ let $monogr := $biblItem/tei:monogr
 let $series := $biblItem/tei:series
 
 let $monoTitle := $monogr/tei:title/string()
-let $monoEditors := $monogr/tei:editor[not(@role)]
-let $monoEditor := if(count($monoEditors)=1)
-                   then($monoEditors)
-                   else if (count($monoEditors) <= 3)
-                   then(string-join($monoEditors, '/'))
-                   else if (count($monoEditors) > 3)
-                   then(concat(string-join(subsequence($monoEditors,1,2), '/'), ' et.al.'))
-                   else('[N.N.]')
-let $monoEditorsColl := $monogr/tei:editor[@role="collaboration"]
-let $monoEditorColl := if(count($monoEditorsColl)=1)
-                   then($monoEditorsColl)
-                   else if (count($monoEditorsColl) <= 3)
-                   then(string-join($monoEditorsColl, '/'))
-                   else if (count($monoEditorsColl) > 3)
-                   then(concat(string-join(subsequence($monoEditorsColl,1,2), '/'), ' et.al.'))
-                   else('[N.N.]')
-let $monoEditorsLabel := $monogr/tei:editor[@role="label"]
-let $monoEditorLabel := if(count($monoEditorsLabel)=1)
-                   then($monoEditorsLabel)
-                   else if (count($monoEditorsLabel) <= 3)
-                   then(string-join($monoEditorsLabel, '/'))
-                   else if (count($monoEditorsLabel) > 3)
-                   then(concat(string-join(subsequence($monoEditorsLabel,1,2), '/'), ' et.al.'))
-                   else('[N.N.]')
-let $monoAuthors := $monogr/tei:author
-let $monoAuthor := if(count($monoAuthors)=1)
-                  then($monoAuthors)
-                  else if (count($monoAuthors) <= 3)
-                  then(string-join($monoAuthors, '/'))
-                  else if (count($monoAuthors) > 3)
-                  then(concat(string-join(subsequence($monoAuthors,1,2), '/'), ' et.al.'))
-                  else('[N.N.]')
+let $monoEditor := app:joinNames($monogr/tei:editor[not(@role)])
+let $monoEditorColl := app:joinNames($monogr/tei:editor[@role="collaboration"])
+let $monoEditorLabel := app:joinNames($monogr/tei:editor[@role="label"])
+let $monoAuthor := app:joinNames($monogr/tei:author)
 
 let $monoScopePages := if($monogr//tei:biblScope/@from = $monogr//tei:biblScope/@to)
                        then($monogr//tei:biblScope/@from/string())
@@ -217,39 +203,32 @@ let $monoScopeVolume := $monogr//tei:biblScope[@unit='volume']/text()
 let $monoPubPlace := $monogr//tei:pubPlace/text()
 let $monoPubDate := $monogr//tei:date/text()
 let $monoPublisher := $monogr//tei:publisher/text()
+let $monoRef := if($biblItem//tei:ref[@type="doi"])
+                then($biblItem//tei:ref[@type="doi"]/text())
+                else($biblItem//tei:ref/@target)
 
 let $seriesTitle := $series/tei:title[not(@type)]
-let $seriesEditors := $series/tei:editor
-let $seriesEditor := if(count($seriesEditors)=1)
-                  then($seriesEditors)
-                  else if (count($seriesEditors) <= 3)
-                  then(string-join($seriesEditors, '/'))
-                  else if (count($seriesEditors) > 3)
-                  then(concat(string-join(subsequence($seriesEditors,1,2), '/'), ' et.al.'))
-                  else('[N.N.]')
+let $seriesEditor := app:joinNames($series/tei:editor)
 let $seriesSection := $series/tei:biblScope[@unit="section"]
 let $seriesTitleSec := $series/tei:title[@type="section"]/text()
 
 let $anaTitle := $analytic/tei:title/text()
-let $anaAuthors := $analytic/tei:author
-let $anaAuthor := if(count($anaAuthors)=1)
-                  then($anaAuthors)
-                  else if (count($anaAuthors) <= 3)
-                  then(string-join($anaAuthors, '/'))
-                  else if (count($anaAuthors) > 3)
-                  then(concat(string-join(subsequence($anaAuthors,1,2), '/'), ' et.al.'))
-                  else('[N.N.]')
+let $anaAuthor := app:joinNames($analytic/tei:author)
+
+(: Bibls :)
 let $monogrBibl := concat(
-                   if($monoAuthor)then(concat($monoAuthor, ': '))else(),
-                   $monoTitle, ', ',
-                   if($monoEditor)then(concat(shared:translate('editedBy'), ' ', $monoEditor, ', '))else(),
-                   if($monoEditorLabel)then(concat(shared:translate('label'), ': ', $monoEditorLabel, ', '))else(),
-                   if($monoEditorColl)then(concat(' ', shared:translate('collaborator'), ' ', $monoEditorColl, ', '))else(),
-                   if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
-                   if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
-                   if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
-                   if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
-                           if($inThePipe) then(concat(', ',$inThePipe))else())
+                       if($monoAuthor)then(concat($monoAuthor, ': '))else(),
+                       $monoTitle, ', ',
+                       if($monoEditor)then(concat(shared:translate('editedBy'), ' ', $monoEditor, ', '))else(),
+                       if($monoEditorLabel)then(concat(shared:translate('label'), ': ', $monoEditorLabel, ', '))else(),
+                       if($monoEditorColl)then(concat(' ', shared:translate('collaborator'), ' ', $monoEditorColl, ', '))else(),
+                       if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
+                       if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
+                       if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
+                       if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
+                       if($monoRef) then('DOI: ' || $monoRef) else(),
+                       if($inThePipe) then(concat(', ',$inThePipe))else()
+                   )
 let $analyticBibl := concat($anaAuthor, ': ',
                             $anaTitle, ', in: ',
                             $monogrBibl,
@@ -268,19 +247,17 @@ let $editionBibl := concat(
                            if($monoEditorColl)then(concat(' ', shared:translate('collaboration'), ' ', $monoEditorColl, ', '))else(),
                            if($monoScopeIssue)then(concat(shared:translate('issue'), ' ', $monoScopeIssue, ', '))else(),
                            if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
-                           if($seriesBibl) then(concat($seriesBibl, ' ')) else(),
+                           if($seriesTitle) then(concat($seriesBibl, ' ')) else(),
                            if($monoPubPlace) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                            if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
+                           if($monoRef) then(', DOI: ' || $monoRef) else(),
                            if($inThePipe) then(concat(', ',$inThePipe))else()
                           )
-
-let $monoRef := $monogr//tei:ref/@target
-let $anaRef := $analytic//tei:ref/@target
 
 return
     if($biblType = 'article' or $biblType = 'review')
     then(concat($analyticBibl, '.'))
-    else if($biblType = 'book')
+    else if($biblType = 'book' or $biblType = 'qualification' or $biblType = 'software')
     then(concat($monogrBibl, '.'))
     else if($biblType = 'poster')
     then(concat($posterBibl, '.'))
