@@ -138,7 +138,7 @@ declare function app:bibliography($node as node(), $model as map(*)) {
                               let $titleMono := $biblItem//tei:monogr//tei:title[1]/text()
                               order by $date descending, $titleAna ascending
                               return
-                                <li style="padding: 3px;">{app:styleBibl($biblItem, $biblType)}</li>
+                                <li style="padding: 3px;" id="{$biblItem/root()/node()/@xml:id}">{app:styleBibl($biblItem, $biblType)}</li>
         order by $biblTypeSort
         return
            (<h3>{shared:translate($biblType)}</h3>,
