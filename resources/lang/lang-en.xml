@@ -57,7 +57,7 @@
     <msg key="training">Training</msg>
     <msg key="qualification">Academic Qualification</msg>
     <msg key="software">Software</msg>
-    <msg key="dataPub">Data Publication</msg>
+    <msg key="dataPub">Data Publications</msg>
     
     <!-- Cookies -->
     <msg key="cookies.notice">This page uses cookies for performance reasons (e.g. language settings)</msg>

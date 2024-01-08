@@ -228,7 +228,7 @@ let $monogrBibl := concat(
                        if($monoScopeVolume)then(concat(shared:translate('volume'), ' ', $monoScopeVolume, ', '))else(),
                        if($monoPubPlace and not($biblItem[@status="unpublished"])) then(concat($monoPubPlace, ' ')) else(shared:translate('noPlace')),' ',
                        if($monoPubDate) then($monoPubDate) else(shared:translate('noDate')),
-                       if($monoRef) then('DOI: ' || $monoRef) else(),
+                       if($monoRef) then(', DOI: ' || $monoRef) else(),
                        if($pubStatus) then(concat(', ',$pubStatus))else()
                    )
 let $analyticBibl := concat($anaAuthor, ': ',
@@ -265,7 +265,7 @@ let $editionBibl := concat(
 return
     if($biblType = 'article' or $biblType = 'review')
     then(concat($analyticBibl, '.'))
-    else if($biblType = 'book' or $biblType = 'qualification' or $biblType = 'software')
+    else if($biblType = 'book' or $biblType = 'qualification' or $biblType = 'software' or $biblType = 'dataPub')
     then(concat($monogrBibl, '.'))
     else if($biblType = 'poster')
     then(concat($posterBibl, '.'))
