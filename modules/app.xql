@@ -127,9 +127,10 @@ declare function app:bibliography($node as node(), $model as map(*)) {
                                 case 'article' return '02'
                                 case 'edition' return '03'
                                 case 'software' return '04'
-                                case 'poster' return '05'
-                                case 'review' return '06'
-                                case 'termPaper' return '07'
+                                case 'dataPub' return '05'
+                                case 'poster' return '06'
+                                case 'review' return '07'
+                                case 'termPaper' return '08'
                                 default return $biblType
         let $biblItems := $biblItems[@type=$biblType]
         let $biblItems := for $biblItem at $n in $biblItems
