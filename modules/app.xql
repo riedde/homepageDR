@@ -34,6 +34,8 @@ declare function app:about($node as node(), $model as map(*)) {
         </h1>
         <div class="subheading mb-5">
             {$settlement} · {shared:translate(concat('country-',$country))} · <a href="mailto:{$email}">{$email}</a>
+            <br/>
+            <a target="_blank" href="https://orcid.org/0000-0001-5545-2088">ORCID</a> · <a target="_blank" href="http://viaf.org/viaf/18157038080566862515">VIAF</a> · <a target="_blank" href="http://d-nb.info/gnd/1091567573">GND</a>
         </div>
         <p class="lead mb-4">{$text}</p>
         <!--<p class="lead mb-3">Orcid-ID: <a href="https://orcid.org/{$orchid}" target="_blank">{$orchid}</a></p>-->
