@@ -3,7 +3,7 @@ xquery version "3.1";
 module namespace app="http://dennisried.de/templates";
 
 import module namespace i18n = "http://exist-db.org/xquery/i18n" at "/db/apps/homepageDR/modules/i18n.xql";
-import module namespace templates="http://exist-db.org/xquery/templates";
+import module namespace templates="http://exist-db.org/xquery/html-templating";
 import module namespace config="http://exist-db.org/xquery/config" at "/db/apps/homepageDR/modules/config.xqm";
 import module namespace shared="http://dennisried.de/shared" at "/db/apps/homepageDR/modules/shared.xql";
 import module namespace functx="http://www.functx.com" at "/db/apps/homepageDR/modules/functx.xqm";
