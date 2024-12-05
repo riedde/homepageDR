@@ -126,23 +126,26 @@ declare function app:bibliography($node as node(), $model as map(*)) {
     for $biblType at $i in $biblTypes
         let $biblTypeSort := switch ($biblType)
                                 case 'qualification' return '01'
-                                case 'article' return '02'
-                                case 'edition' return '03'
-                                case 'software' return '04'
-                                case 'dataPub' return '05'
-                                case 'poster' return '06'
-                                case 'review' return '07'
-                                case 'termPaper' return '08'
+                                case 'edited' return '02'
+                                case 'article' return '03'
+                                case 'edition' return '04'
+                                case 'software' return '05'
+                                case 'dataPub' return '06'
+                                case 'contribution' return '07'
+                                case 'poster' return '08'
+                                case 'review' return '09'
+                                case 'termPaper' return '10'
                                 default return $biblType
         let $biblItems := $biblItems[@type=$biblType]
         let $biblItems := for $biblItem at $n in $biblItems
                               let $biblType := $biblItem/@type/string()
+                              let $biblSubType := $biblItem/@subtype/string()
                               let $date := $biblItem//tei:imprint/tei:date/@when-custom/string()
                               let $titleAna := $biblItem//tei:analytic//tei:title[1]/text()
                               let $titleMono := $biblItem//tei:monogr//tei:title[1]/text()
                               order by $date descending, $titleAna ascending
                               return
-                                <li style="padding: 3px;" id="{$biblItem/root()/node()/@xml:id}">{app:styleBibl($biblItem, $biblType)}</li>
+                                <li style="padding: 3px;" id="{$biblItem/root()/node()/@xml:id}">{app:styleBibl($biblItem, $biblType, $biblSubType)}</li>
         order by $biblTypeSort
         return
            (<h3>{shared:translate($biblType)} ({count($biblItems)})</h3>,
@@ -183,7 +186,7 @@ declare function app:joinNames($names as node()*) as xs:string? {
 
 
 
-declare function app:styleBibl($biblItem as node(), $biblType as xs:string) {
+declare function app:styleBibl($biblItem as node(), $biblType as xs:string, $biblSubType as xs:string?) {
 let $pubStatus := if($biblItem[@status="inThePipe"]) then(shared:translate('inThePipe'))
                   else if($biblItem[@status="unpublished"]) then(shared:translate('unpublished'))
                   else()
@@ -234,7 +237,7 @@ let $monogrBibl := concat(
                        if($monoRef) then(', ' || $monoRef) else(),
                        if($pubStatus) then(concat(', ',$pubStatus))else()
                    )
-let $analyticBibl := concat($anaAuthor, ': ',
+let $analyticBibl := concat(if($anaAuthor) then($anaAuthor || ': ') else(),
                             $anaTitle, ', in: ',
                             $monogrBibl,
                             if($monoScopePages)then(concat(', ', shared:translate('page'), ' ', $monoScopePages))else()
@@ -266,9 +269,9 @@ let $editionBibl := concat(
                           )
 
 return
-    if($biblType = 'article' or $biblType = 'review')
+    if($biblType = 'article' or $biblSubType = 'article' or $biblType = 'review')
     then(concat($analyticBibl, '.'))
-    else if($biblType = 'book' or $biblType = 'qualification' or $biblType = 'software' or $biblType = 'dataPub')
+    else if($biblType = 'book' or $biblSubType = 'book' or $biblType = 'qualification' or $biblType = 'software' or $biblType = 'dataPub' or $biblType = 'contribution')
     then(concat($monogrBibl, '.'))
     else if($biblType = 'poster')
     then(concat($posterBibl, '.'))

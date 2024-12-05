@@ -8,7 +8,7 @@
     <msg key="commitment">Engagement</msg>
     <msg key="organisations">Organisationen</msg>
     <msg key="conferences">Tagungen</msg>
-    <msg key="papers">Schriften</msg>
+    <msg key="papers">Publikationen</msg>
     
     <!-- About -->
     <msg key="country-de">Deutschland</msg>
@@ -39,7 +39,8 @@
     <msg key="booklet">Booklet-Texte</msg>
     <msg key="inThePipe">[in Vorbereitung]</msg>
     <msg key="collaboration">unter Mitarbeit von</msg>
-    
+    <msg key="contribution">Mitwirkung</msg>
+    <msg key="edited">Herausgabe</msg>
     
     <!-- Conferences -->
     <msg key="past">Vergangene (Auswahl)</msg>

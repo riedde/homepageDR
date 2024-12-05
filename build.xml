@@ -13,6 +13,11 @@
     <property name="xar.name" value="${project.app}-${project.version}-${DATETIME}.xar"/>
     
     <target name="xar" >
+        <copy todir="." overwrite="true">
+            <fileset dir="resources/assets/img">
+                <include name="icon.png"/>
+            </fileset>
+        </copy>
         <mkdir dir="${build.dir}"/>
         <zip basedir="." destfile="${build.dir}/${xar.name}" excludes="build/ .existdb.json"/>
     </target>
